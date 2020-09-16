@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--    引入logo文件-->
+    <div th:replace="fragments/header::css"></div>
+</head>
+<body>
+<!--引入logo文件-->
+<div class="col-lg-2 side"  style="height: 330px;width: 10%">
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+</div>
+<div class="col-lg-10" >
+    <div th:replace="fragments/top::top"></div>
+    <div class="content" style="width: 100%;height: 100%">
+
+    </div>
+</div>
+<!--引入logo文件-->
+<div th:replace="fragments/header::js"></div>
+</body>
+
+</html>

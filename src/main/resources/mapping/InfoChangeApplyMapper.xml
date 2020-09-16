@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.InfoChangeApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.InfoChangeApply" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="field_name" property="fieldName" jdbcType="VARCHAR" />
+    <result column="old_value" property="oldValue" jdbcType="VARCHAR" />
+    <result column="new_value" property="newValue" jdbcType="VARCHAR" />
+    <result column="change_reason" property="changeReason" jdbcType="VARCHAR" />
+    <result column="change_state" property="changeState" jdbcType="INTEGER" />
+    <result column="city_opinion" property="cityOpinion" jdbcType="VARCHAR" />
+    <result column="root_opinion" property="rootOpinion" jdbcType="VARCHAR" />
+    <result column="handle_time" property="handleTime" jdbcType="VARCHAR" />
+    <result column="result_state" property="resultState" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, exam_card_num, field_name, old_value, new_value, change_reason, change_state, 
+    city_opinion, root_opinion, handle_time, result_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from info_change_apply
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from info_change_apply
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.InfoChangeApply" >
+    insert into info_change_apply (id, exam_card_num, field_name, 
+      old_value, new_value, change_reason, 
+      change_state, city_opinion, root_opinion, 
+      handle_time, result_state)
+    values (#{id,jdbcType=VARCHAR}, #{examCardNum,jdbcType=VARCHAR}, #{fieldName,jdbcType=VARCHAR}, 
+      #{oldValue,jdbcType=VARCHAR}, #{newValue,jdbcType=VARCHAR}, #{changeReason,jdbcType=VARCHAR}, 
+      #{changeState,jdbcType=INTEGER}, #{cityOpinion,jdbcType=VARCHAR}, #{rootOpinion,jdbcType=VARCHAR}, 
+      #{handleTime,jdbcType=VARCHAR}, #{resultState,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.InfoChangeApply" >
+    insert into info_change_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num,
+      </if>
+      <if test="fieldName != null" >
+        field_name,
+      </if>
+      <if test="oldValue != null" >
+        old_value,
+      </if>
+      <if test="newValue != null" >
+        new_value,
+      </if>
+      <if test="changeReason != null" >
+        change_reason,
+      </if>
+      <if test="changeState != null" >
+        change_state,
+      </if>
+      <if test="cityOpinion != null" >
+        city_opinion,
+      </if>
+      <if test="rootOpinion != null" >
+        root_opinion,
+      </if>
+      <if test="handleTime != null" >
+        handle_time,
+      </if>
+      <if test="resultState != null" >
+        result_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="examCardNum != null" >
+        #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldName != null" >
+        #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="oldValue != null" >
+        #{oldValue,jdbcType=VARCHAR},
+      </if>
+      <if test="newValue != null" >
+        #{newValue,jdbcType=VARCHAR},
+      </if>
+      <if test="changeReason != null" >
+        #{changeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="changeState != null" >
+        #{changeState,jdbcType=INTEGER},
+      </if>
+      <if test="cityOpinion != null" >
+        #{cityOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="rootOpinion != null" >
+        #{rootOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null" >
+        #{handleTime,jdbcType=VARCHAR},
+      </if>
+      <if test="resultState != null" >
+        #{resultState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.InfoChangeApply" >
+    update info_change_apply
+    <set >
+      <if test="examCardNum != null" >
+        exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldName != null" >
+        field_name = #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="oldValue != null" >
+        old_value = #{oldValue,jdbcType=VARCHAR},
+      </if>
+      <if test="newValue != null" >
+        new_value = #{newValue,jdbcType=VARCHAR},
+      </if>
+      <if test="changeReason != null" >
+        change_reason = #{changeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="changeState != null" >
+        change_state = #{changeState,jdbcType=INTEGER},
+      </if>
+      <if test="cityOpinion != null" >
+        city_opinion = #{cityOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="rootOpinion != null" >
+        root_opinion = #{rootOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null" >
+        handle_time = #{handleTime,jdbcType=VARCHAR},
+      </if>
+      <if test="resultState != null" >
+        result_state = #{resultState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.InfoChangeApply" >
+    update info_change_apply
+    set exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      field_name = #{fieldName,jdbcType=VARCHAR},
+      old_value = #{oldValue,jdbcType=VARCHAR},
+      new_value = #{newValue,jdbcType=VARCHAR},
+      change_reason = #{changeReason,jdbcType=VARCHAR},
+      change_state = #{changeState,jdbcType=INTEGER},
+      city_opinion = #{cityOpinion,jdbcType=VARCHAR},
+      root_opinion = #{rootOpinion,jdbcType=VARCHAR},
+      handle_time = #{handleTime,jdbcType=VARCHAR},
+      result_state = #{resultState,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

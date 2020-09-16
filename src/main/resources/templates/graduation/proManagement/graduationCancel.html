@@ -1,0 +1,250 @@
+<!--  毕业撤销页面  -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>毕业撤销</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>考生毕业证撤销</center></h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <!-- 选择输入部分 -->
+                    <div class="col-md-4">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <form action="">
+                            <div class="row">
+                                <!--准考证输入框-->
+                                <div class="col-md-10 myselect_1">
+                                    <span>请选择准考证号：</span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <select  id="select1" class="form-control myselect_2" onchange="moveTw(this)">
+                                        <option th:each="graCert,graState:${graduateCertList}" th:text="${graCert.getExamCardNum()}" th:value="${graState.index}"></option>
+                                    </select>
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                            <!-- 毕业证输入框  -->
+                            <div class="row">
+
+                                <div class="col-md-10 myselect_1">
+                                    <span>对应毕业证编号：</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <select id="select2" class="form-control myselect_2" onchange="moveTw(this)">
+                                        <option th:each="graCert,graState:${graduateCertList}" th:text="${graCert.graduateId}" th:value="${graState.index}"></option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </form>
+
+
+                        <!-- 确认按钮  -->
+                        <div class="row">
+                            <br>
+                            <br>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-warning" onclick="rebuild()">重置</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-success" onclick="queryInfo()">查询</button>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- 中间留一点空格  -->
+                    <div class="col-md-1">
+
+                    </div>
+                    <!-- 右边表格部分 -->
+                    <div class="col-md-7" id="newDataContainer">
+                        <div id="newData">
+                            <table class="table table-bordered  table table-hover">
+                                <caption  style="text-align:center">考生毕业信息表</caption>
+                                <tbody>
+                                <tr>
+                                    <td>考生照片</td>
+                                    <td>考生姓名</td>
+                                    <td>毕业证号</td>
+                                    <td>准考证号</td>
+                                    <td>选择</td>
+                                </tr>
+                                <tr th:if="${graduateInfo!=null}">
+                                    <td>
+                                        <img th:src="@{'~/imgs/'+${graduateInfo.getPhotoPath()}+'.png'}" class="img-circle" style="width: 30px;height: 30px">
+                                    </td>
+                                    <td th:text="${graduateInfo.getName()}"></td>
+                                    <td th:text="${graduateInfo.getGraduateId()}"></td>
+                                    <td th:text="${graduateInfo.getExamCardNum()}"></td>
+                                    <td>
+                                        <!-- 勾选框 -->
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="">
+                                            </label>
+                                            <input class="examCardNum" th:value="${graduateInfo.getExamCardNum()}"style="display: none">
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="myspan">
+                                    <span>当前第 1 页</span>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-warning" >上一页</button>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-success">下一页</button>
+                                </div>
+                            </div>
+
+                            <br>
+                            <br>
+
+
+                            <!-- 确认退学按钮 -->
+                            <div class="row">
+                                <br>
+                                <br>
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-warning" onclick="rebuild()">重置</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-success" onclick="sureCancel()">确认撤销</button>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+
+<!-- JavaScript部分 -->
+<script>
+    $(function(){
+        //清空form表单下的输入框
+        $('.ydr').on('click', function () {
+            $(':input','form')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+        });
+    });
+
+    function moveTw(event) {
+        var id = event.id;
+        if (id == "select1"){
+            var value = $("#select1").val();
+            $("#select2").val(value);
+        }else if (id == "select2"){
+            var value = $("#select2").val();
+            $("#select1").val(value);
+        }
+    }
+
+    function queryInfo() {
+        var examCardNum = $("#select1").find("option:selected").text();
+        if (examCardNum!==""){
+            $.ajax({
+                type: 'post',
+                url: '/graduation/proManagement/graduationCancelSearch',
+                data:{examCardNum:examCardNum},
+                success: function (data) {
+                    console.log(data);
+                    var html = $(data).find("#newData");
+                    $("#newDataContainer").html(html);
+
+                }
+            });
+    }
+    }
+    function sureCancel() {
+        var examCardNum = $(".examCardNum").val();
+        if (examCardNum){
+            $.ajax({
+                type: 'post',
+                url: '/graduation/proManagement/graduationCancelSure',
+                data:{examCardNum:examCardNum},
+                success: function (data) {
+                    console.log(data);
+                    var html = $(data).find("#newData");
+                    $("#newDataContainer").html(html);
+
+                }
+            });
+
+    }
+
+    }
+    function rebuild() {
+        $("#select1").val("");
+        $("#select2").val("");
+    }
+</script>
+</body>
+</html>

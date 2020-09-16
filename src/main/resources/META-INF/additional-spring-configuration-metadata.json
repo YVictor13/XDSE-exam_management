@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.datasource.freemarker.allow-request-override",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.freemarker.allow-request-override."
+  }
+] }

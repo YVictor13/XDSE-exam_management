@@ -1,0 +1,129 @@
+<!--考籍转入业务办理时间设置-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>考籍转入业务办理时间设置</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>考籍转入业务办理时间设置</center></h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <!-- 左边留一点空格  -->
+                    <div class="col-md-4">
+                    </div>
+                    <!-- 中间设置部分 -->
+                    <div class="col-md-7">
+                        <br>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-5 myselect_3">
+                                <span>请选择开始时间：</span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <!-- 开始时间框 -->
+                                <input type="date" class="form-control myinput_1"  id="input_start" name="beginTime" th:value="${timeManage.getBeginTime()}">
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-5 myselect_3">
+                                <span>请选择结束时间：</span>
+                            </div>
+                            <div class="col-md-3">
+                                <!-- 结束时间框 -->
+                                <input type="date" class="form-control myinput_1"  id="input_end" th:value="${timeManage.getEndTime()}">
+                            </div>
+
+                        </div>
+                        <br>
+                        <br>
+                        <!-- 确认按钮  -->
+                        <div class="row">
+                            <br>
+                            <br>
+
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-warning" onclick="rebuild()">重置</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-success" onclick="sureSetTime()">确认</button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <!-- 右边留一点空格-->
+                    <div class="col-md-1">
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    function sureSetTime() {
+        var beginTime = $("#input_start").val();
+        var endTime = $("#input_end").val();
+        if (beginTime&&endTime){
+            $.ajax({
+                method:'post',
+                url:'/stuInfoInOut/timeManagement/stuInfoInTimeManagement',
+                data:{beginTime:beginTime,endTime:endTime},
+                success:function (data) {
+                    location.reload();
+                }
+            })
+        }
+    }
+    function rebuild() {
+        $(".myinput_1").val("");
+    }
+</script>
+
+</body>
+</html>

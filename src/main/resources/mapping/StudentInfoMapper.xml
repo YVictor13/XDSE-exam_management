@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.StudentInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.StudentInfo" >
+    <id column="student_id" property="studentId" jdbcType="VARCHAR" />
+    <result column="info_state" property="infoState" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="nation" property="nation" jdbcType="INTEGER" />
+    <result column="political" property="political" jdbcType="INTEGER" />
+    <result column="job" property="job" jdbcType="INTEGER" />
+    <result column="degree" property="degree" jdbcType="INTEGER" />
+    <result column="health" property="health" jdbcType="INTEGER" />
+    <result column="census_place" property="censusPlace" jdbcType="INTEGER" />
+    <result column="student_type" property="studentType" jdbcType="INTEGER" />
+    <result column="id_card_type" property="idCardType" jdbcType="INTEGER" />
+    <result column="id_card_num" property="idCardNum" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="post_code" property="postCode" jdbcType="VARCHAR" />
+    <result column="work_place" property="workPlace" jdbcType="VARCHAR" />
+    <result column="photo_path" property="photoPath" jdbcType="VARCHAR" />
+    <result column="english_name" property="englishName" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    student_id, info_state, sex, nation, political, job, degree, health, census_place, 
+    student_type, id_card_type, id_card_num, name, birthday, phone_number, address, post_code, 
+    work_place, photo_path, english_name, email
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_info
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student_info
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.StudentInfo" >
+    insert into student_info (student_id, info_state, sex, 
+      nation, political, job, 
+      degree, health, census_place, 
+      student_type, id_card_type, id_card_num, 
+      name, birthday, phone_number, 
+      address, post_code, work_place, 
+      photo_path, english_name, email
+      )
+    values (#{studentId,jdbcType=VARCHAR}, #{infoState,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, 
+      #{nation,jdbcType=INTEGER}, #{political,jdbcType=INTEGER}, #{job,jdbcType=INTEGER}, 
+      #{degree,jdbcType=INTEGER}, #{health,jdbcType=INTEGER}, #{censusPlace,jdbcType=INTEGER}, 
+      #{studentType,jdbcType=INTEGER}, #{idCardType,jdbcType=INTEGER}, #{idCardNum,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{postCode,jdbcType=VARCHAR}, #{workPlace,jdbcType=VARCHAR}, 
+      #{photoPath,jdbcType=VARCHAR}, #{englishName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.StudentInfo" >
+    insert into student_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        student_id,
+      </if>
+      <if test="infoState != null" >
+        info_state,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="nation != null" >
+        nation,
+      </if>
+      <if test="political != null" >
+        political,
+      </if>
+      <if test="job != null" >
+        job,
+      </if>
+      <if test="degree != null" >
+        degree,
+      </if>
+      <if test="health != null" >
+        health,
+      </if>
+      <if test="censusPlace != null" >
+        census_place,
+      </if>
+      <if test="studentType != null" >
+        student_type,
+      </if>
+      <if test="idCardType != null" >
+        id_card_type,
+      </if>
+      <if test="idCardNum != null" >
+        id_card_num,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="postCode != null" >
+        post_code,
+      </if>
+      <if test="workPlace != null" >
+        work_place,
+      </if>
+      <if test="photoPath != null" >
+        photo_path,
+      </if>
+      <if test="englishName != null" >
+        english_name,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="infoState != null" >
+        #{infoState,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=INTEGER},
+      </if>
+      <if test="political != null" >
+        #{political,jdbcType=INTEGER},
+      </if>
+      <if test="job != null" >
+        #{job,jdbcType=INTEGER},
+      </if>
+      <if test="degree != null" >
+        #{degree,jdbcType=INTEGER},
+      </if>
+      <if test="health != null" >
+        #{health,jdbcType=INTEGER},
+      </if>
+      <if test="censusPlace != null" >
+        #{censusPlace,jdbcType=INTEGER},
+      </if>
+      <if test="studentType != null" >
+        #{studentType,jdbcType=INTEGER},
+      </if>
+      <if test="idCardType != null" >
+        #{idCardType,jdbcType=INTEGER},
+      </if>
+      <if test="idCardNum != null" >
+        #{idCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workPlace != null" >
+        #{workPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="photoPath != null" >
+        #{photoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null" >
+        #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.StudentInfo" >
+    update student_info
+    <set >
+      <if test="infoState != null" >
+        info_state = #{infoState,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation,jdbcType=INTEGER},
+      </if>
+      <if test="political != null" >
+        political = #{political,jdbcType=INTEGER},
+      </if>
+      <if test="job != null" >
+        job = #{job,jdbcType=INTEGER},
+      </if>
+      <if test="degree != null" >
+        degree = #{degree,jdbcType=INTEGER},
+      </if>
+      <if test="health != null" >
+        health = #{health,jdbcType=INTEGER},
+      </if>
+      <if test="censusPlace != null" >
+        census_place = #{censusPlace,jdbcType=INTEGER},
+      </if>
+      <if test="studentType != null" >
+        student_type = #{studentType,jdbcType=INTEGER},
+      </if>
+      <if test="idCardType != null" >
+        id_card_type = #{idCardType,jdbcType=INTEGER},
+      </if>
+      <if test="idCardNum != null" >
+        id_card_num = #{idCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        post_code = #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workPlace != null" >
+        work_place = #{workPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="photoPath != null" >
+        photo_path = #{photoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null" >
+        english_name = #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.StudentInfo" >
+    update student_info
+    set info_state = #{infoState,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=INTEGER},
+      nation = #{nation,jdbcType=INTEGER},
+      political = #{political,jdbcType=INTEGER},
+      job = #{job,jdbcType=INTEGER},
+      degree = #{degree,jdbcType=INTEGER},
+      health = #{health,jdbcType=INTEGER},
+      census_place = #{censusPlace,jdbcType=INTEGER},
+      student_type = #{studentType,jdbcType=INTEGER},
+      id_card_type = #{idCardType,jdbcType=INTEGER},
+      id_card_num = #{idCardNum,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      post_code = #{postCode,jdbcType=VARCHAR},
+      work_place = #{workPlace,jdbcType=VARCHAR},
+      photo_path = #{photoPath,jdbcType=VARCHAR},
+      english_name = #{englishName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR}
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </update>
+
+<!--  依据地区统计学生-->
+  <select id="countStuInfoByDis" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT *
+    FROM student_info s
+    WHERE s.student_id IN(
+        SELECT student_id
+        FROM sign_up_info
+        WHERE city_code=#{cityCode}
+    );
+
+  </select>
+
+  <select id="queryAllCity" resultType="java.lang.String">
+    SELECT  DISTINCT city_code
+    FROM sign_up_info
+  </select>
+
+<!--  更新非关键信息-->
+  <update id="updateUnCriticalInfo" parameterType="com.example.demo.model.StudentInfo">
+    update student_info
+    <set>
+    <if test="postCode != ''" >
+      post_code = #{postCode},
+    </if>
+    <if test="email != ''">
+      email = #{email},
+    </if>
+    <if test="workPlace != ''">
+      work_place = #{workPlace},
+    </if>
+    <if test="health != null">
+      health = #{health},
+    </if>
+    <if test="censusPlace !=null">
+      census_place = #{censusPlace},
+    </if>
+    <if test="phoneNumber != ''">
+      phone_number = #{phoneNumber},
+    </if>
+    <if test="address !=''">
+      address = #{address},
+    </if>
+    </set>
+    where student_id = #{studentId}
+  </update>
+  <update id="updatePicPathById">
+    update student_info
+    set photo_path = #{newPath, jdbcType=VARCHAR}
+    where student_id = #{stuId, jdbcType=VARCHAR}
+  </update>
+<!--  void quitStuById(List<String> stuIdList);-->
+  <update id="quitStuById" parameterType="java.util.List">
+    update student_info
+    set info_state = 5
+    where student_id in
+    <foreach collection="stuIdList" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </update>
+</mapper>

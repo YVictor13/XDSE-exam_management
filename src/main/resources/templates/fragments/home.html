@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+
+    </style>
+</head>
+<body>
+
+<div id="wrapper" >
+    <div class="overlay"></div>
+
+    <!-- Sidebar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation" th:fragment="sidebar">
+        <span  style="display: none"th:if="${session.auth !=''}" ><input th:id="role" th:value="${session.auth}"></span>
+        <ul class="nav sidebar-nav">
+            <li class="sidebar-brand">
+                <a href="#">
+                    <img th:src="@{~/imgs/us.png}" class="img-circle" style="width: 30px;height: 30px">
+                    <span style="color: #33FFFF;margin-left: 10px;font-size: 15px;" th:text="${session.account.getAccount()}"></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/index}"><i class="fa fa-fw fa-home"></i> 首页</a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i>考籍管理 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-header" style="display: none">Dropdown heading</li>
+                    <li class="role0"><a th:href="@{/stuInfo/nonCriticalInfoModify}">&nbsp;&nbsp;考生非关键信息修改</a></li>
+                    <li class="role1"><a th:href="@{/stuInfo/photoModify}">&nbsp;&nbsp;&nbsp;照片修改</a></li>
+                    <li class="role0"><a th:href="@{/stuInfo/criticalInfoModifyApply}">&nbsp;&nbsp;考生关键信息修改申请</a></li>
+                    <li class="role1"><a th:href="@{/stuInfo/criticalInfoModifyCheck}">&nbsp;&nbsp;考生关键信息修改审核</a></li>
+                    <li class="role0"><a th:href="@{/stuInfo/ECNModifyApply}">&nbsp;&nbsp;考生准考证号修改申请</a></li>
+                    <li class="role1"><a th:href="@{/stuInfo/ECNModifyCheck}">&nbsp;&nbsp;考生准考证号修改审核</a></li>
+                    <li class="role1"><a th:href="@{/stuInfo/quitManage}">&nbsp;&nbsp;考生退学管理</a></li>
+                    <li class="role1"><a th:href="@{/stuInfo/examManager}">&nbsp;&nbsp;考次设置</a></li>
+                    <li class="role1"><a th:href="@{/stuInfo/importGrade}">&nbsp;&nbsp;考生成绩导入</a></li>
+                    <li class="role2"><a th:href="@{/stuInfo/statistics}">&nbsp;&nbsp;考籍统计</a></li>
+                    <li class="role2"><a th:href="@{/stuInfo/timeManage}">&nbsp;&nbsp;审核时间设置</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i>免考管理 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-header" style="display: none">Dropdown heading</li>
+                    <li class="role0"><a th:href="@{/freeExam/oneClass/apply}">&nbsp;&nbsp;免考申请(一类)</a></li>
+                    <li class="role1"><a th:href="@{/freeExam/oneClass/check}">&nbsp;&nbsp;免考审核(一类)</a></li>
+                    <li class="role2"><a th:href="@{/freeExam/oneClass/action}">&nbsp;&nbsp;入库确认(一类)</a></li>
+                    <li class="role0"><a th:href="@{/freeExam/twoClass/apply}">&nbsp;&nbsp;免考申请(二类)</a></li>
+                    <li class="role1"><a th:href="@{/freeExam/twoClass/check}">&nbsp;&nbsp;免考审核(二类)</a></li>
+                    <li class="role2"><a th:href="@{/freeExam/twoClass/action}">&nbsp;&nbsp;入库确认(二)</a></li>
+                    <li class="role0"><a th:href="@{/freeExam/threeClass/apply}">&nbsp;&nbsp;免考申请(三)</a></li>
+                    <li class="role1"><a th:href="@{/freeExam/threeClass/check}">&nbsp;&nbsp;免考审核(三)</a></li>
+                    <li class="role2"><a th:href="@{/freeExam/threeClass/action}">&nbsp;&nbsp;入库确认(三)</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i>毕业管理 <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li class="dropdown-header" style="display: none">Dropdown heading</li>
+                <li class="role1"><a th:href="@{/graduation/statistic/thisGraduationThesisStatistics}">&nbsp;&nbsp;本次毕业统计</a></li>
+                <li class="role1"><a th:href="@{/graduation/statistic/beforeGraduationThesisStatistics}">&nbsp;&nbsp;历次毕业统计</a></li>
+                <li class="role1"><a th:href="@{/graduation/statistic/graduationStatistics}">&nbsp;&nbsp;毕业生统计</a></li>
+                <li class="role1"><a th:href="@{/graduation/proManagement/graduationApplyCheck}">&nbsp;&nbsp;毕业申请审核</a></li>
+                <li class="role1"><a th:href="@{/graduation/proManagement/graduationCancel}">&nbsp;&nbsp;毕业申请撤销</a></li>
+                <li class="role1"><a th:href="@{/graduation/proManagement/graduationCertificatePrint}">&nbsp;&nbsp;毕业证打印</a></li>
+                <li class="role1"><a th:href="@{/graduation/proManagement/graduationCertificateReceivingIdentify}">&nbsp;&nbsp;毕业证已领取确认</a></li>
+                <li class="role2"><a th:href="@{/graduation/proManagement/graduationTransactionTimeSet}">&nbsp;&nbsp;业务办理时间设置</a></li>
+                <li class="role2"><a th:href="@{/graduation/proManagement/readyGraduation}">&nbsp;&nbsp;毕业生预提</a></li>
+                <li class="role2"><a th:href="@{/graduation/proof/chineseEnglishGradesProof}">&nbsp;&nbsp;中英文成绩证明</a></li>
+                <li class="role2"><a th:href="@{/graduation/proof/gradesQualified}">&nbsp;&nbsp;成绩合格证明</a></li>
+                <li class="role2"><a th:href="@{/graduation/proof/graduationProof}">&nbsp;&nbsp;毕业证明</a></li>
+                <li class="role2"><a th:href="@{/graduation/proof/postgraduateApplicationProof}">&nbsp;&nbsp;研究生报考资格证明</a></li>
+                <li class="role0"><a th:href="@{/graduation/studentNeed/graduationApplication}">&nbsp;&nbsp;毕业申请</a></li>
+                <li class="role0"><a th:href="@{/graduation/studentNeed/graduationQualificationInquiry}">&nbsp;&nbsp;毕业资格查询</a></li>
+                <li class="role0"><a th:href="@{/graduation/studentNeed/graduationCertificateProgressInquiry}">&nbsp;&nbsp;毕业证进度信息查询</a></li>
+                <li class="role0"><a th:href="@{/graduation/studentNeed/graduationCertificateReceivingInquiry}">&nbsp;&nbsp;毕业证学籍档案领取地点查询</a></li>
+                <li class="role0"><a th:href="@{/graduation/studentNeed/preQualificationReviewApplication}">&nbsp;&nbsp;前置学历审核申请</a></li>
+                <li class="role1"><a th:href="@{/graduation/studentNeed/preQualificationReview}">&nbsp;&nbsp;前置学历审核</a></li>
+            </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i>考籍转入/转出管理 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-header" style="display: none">Dropdown heading</li>
+                    <li class="role2"><a th:href="@{/stuInfoInOut/timeManagement/stuInfoInTimeManagement}">&nbsp;&nbsp;考籍转入业务办理时间设置</a></li>
+                    <li class="role2"><a th:href="@{/stuInfoInOut/timeManagement/stuInfoOutTimeManagement}">&nbsp;&nbsp;考籍转出业务办理时间设置</a></li>
+                    <li class="role1 role2"><a th:href="@{/stuInfoInOut/statistic/stuInfoInBeforeStart}">&nbsp;&nbsp;考籍转入历次-按地方统计</a></li>
+                    <li class="role1 role2"><a th:href="@{/stuInfoInOut/statistic/stuInfoInThisStart}">&nbsp;&nbsp;考籍转入本次-按地方统计</a></li>
+                    <li class="role1 role2"><a th:href="@{/stuInfoInOut/statistic/stuInfoOutBeforeEnd}">&nbsp;&nbsp;考籍转出历次-按地方统计</a></li>
+                    <li class="role1 role2"><a th:href="@{/stuInfoInOut/statistic/stuInfoOutThisEnd}">&nbsp;&nbsp;考籍转出本次-按地方统计</a></li>
+                    <li class="role1 role2"><a th:href="@{/stuInfoInOut/statistic/stuInfoOutThisName}">&nbsp;&nbsp;考籍转出-按本次名单统计</a></li>
+                    <li class="role1 role2"><a th:href="@{/stuInfoInOut/statistic/stuInfoOutTime}">&nbsp;&nbsp;考籍转出-按办理时间统计</a></li>
+                    <li class="role1"><a th:href="@{/stuInfoInOut/infoInCheck}">&nbsp;&nbsp;考籍转入资料审核</a></li>
+                    <li class="role2"><a th:href="@{/stuInfoInOut/infoEntryDatabase}">&nbsp;&nbsp;合格考籍资料入库</a></li>
+                    <li class="role0"><a th:href="@{/stuInfoInOut/infoOutApply}">&nbsp;&nbsp;考籍转出手续申请</a></li>
+                    <li class="role1"><a th:href="@{/stuInfoInOut/infoOutCheck}">&nbsp;&nbsp;考籍转出资料审核</a></li>
+                    <li class="role2"><a th:href="@{/stuInfoInOut/infoOutAction}">&nbsp;&nbsp;考籍转出资料入库</a></li>
+                    <li class="role2"><a th:href="@{/stuInfoInOut/infoOutPackage}">&nbsp;&nbsp;考籍转出资料打包上传</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i>日志管理 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-header" style="display: none">Dropdown heading</li>
+                    <li class="role2"><a th:href="@{/logManagement/stuInfoUpdateLog}">&nbsp;&nbsp;考籍业务操作日志</a></li>
+                    <li class="role2"><a th:href="@{/logManagement/stuInfoModifyLog}">&nbsp;&nbsp;考籍修改日志</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper" th:fragment="pagecontent">
+        <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+            <span class="hamb-top"></span>
+            <span class="hamb-middle"></span>
+            <span class="hamb-bottom"></span>
+        </button>
+        <div class="container">
+            <div class="row">
+<!--                <div th:replace="fragments/top::top"></div>-->
+                <div th:replace="fragments/main::main"></div>
+                <br>
+                <br>
+                <br>
+                <div th:replace="fragments/main::inform"></div>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

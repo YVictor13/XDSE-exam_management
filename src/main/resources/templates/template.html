@@ -1,0 +1,46 @@
+<!-- 前段模板文件  -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>前端模板</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>页面标题</center></h2>
+            <hr>
+        </div>
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <div class="container">
+                <!-- 此处开始写内容 -->
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+
+</body>
+
+</html>

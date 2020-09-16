@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.MajorMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Major" >
+    <id column="major_num" property="majorNum" jdbcType="VARCHAR" />
+    <result column="major_name" property="majorName" jdbcType="VARCHAR" />
+    <result column="major_level" property="majorLevel" jdbcType="VARCHAR" />
+    <result column="major_type" property="majorType" jdbcType="VARCHAR" />
+    <result column="major_dir" property="majorDir" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    major_num, major_name, major_level, major_type, major_dir
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from major
+    where major_num = #{majorNum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from major
+    where major_num = #{majorNum,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.Major" >
+    insert into major (major_num, major_name, major_level, 
+      major_type, major_dir)
+    values (#{majorNum,jdbcType=VARCHAR}, #{majorName,jdbcType=VARCHAR}, #{majorLevel,jdbcType=VARCHAR}, 
+      #{majorType,jdbcType=VARCHAR}, #{majorDir,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.Major" >
+    insert into major
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="majorNum != null" >
+        major_num,
+      </if>
+      <if test="majorName != null" >
+        major_name,
+      </if>
+      <if test="majorLevel != null" >
+        major_level,
+      </if>
+      <if test="majorType != null" >
+        major_type,
+      </if>
+      <if test="majorDir != null" >
+        major_dir,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="majorNum != null" >
+        #{majorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="majorName != null" >
+        #{majorName,jdbcType=VARCHAR},
+      </if>
+      <if test="majorLevel != null" >
+        #{majorLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="majorType != null" >
+        #{majorType,jdbcType=VARCHAR},
+      </if>
+      <if test="majorDir != null" >
+        #{majorDir,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Major" >
+    update major
+    <set >
+      <if test="majorName != null" >
+        major_name = #{majorName,jdbcType=VARCHAR},
+      </if>
+      <if test="majorLevel != null" >
+        major_level = #{majorLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="majorType != null" >
+        major_type = #{majorType,jdbcType=VARCHAR},
+      </if>
+      <if test="majorDir != null" >
+        major_dir = #{majorDir,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where major_num = #{majorNum,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Major" >
+    update major
+    set major_name = #{majorName,jdbcType=VARCHAR},
+      major_level = #{majorLevel,jdbcType=VARCHAR},
+      major_type = #{majorType,jdbcType=VARCHAR},
+      major_dir = #{majorDir,jdbcType=VARCHAR}
+    where major_num = #{majorNum,jdbcType=VARCHAR}
+  </update>
+</mapper>

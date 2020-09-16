@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.GraduateCertMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.GraduateCert" >
+    <id column="graduate_id" property="graduateId" jdbcType="VARCHAR" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="graduate_date" property="graduateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="GraduationSchool" type="com.example.demo.model.helper.GraduationStatisticHelper">
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="major_num" property="majorNum" jdbcType="VARCHAR" />
+    <result column="graduate_date" property="graduateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="GraduationStatistic" type="com.example.demo.model.helper.GraduationStatisticHelper">
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="major_num" property="majorNum" jdbcType="VARCHAR" />
+    <result column="graduate_date" property="graduateDate" jdbcType="VARCHAR" />
+    <result column="graduate_id" property="graduateId" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="GraduateCancleHelper" type="com.example.demo.model.helper.GraduateCancelHelper">
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="photo_path" property="photoPath" jdbcType="VARCHAR" />
+    <result column="graduate_id" property="graduateId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    graduate_id, exam_card_num, graduate_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from graduate_cert
+    where graduate_id = #{graduateId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from graduate_cert
+    where graduate_id = #{graduateId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.GraduateCert" >
+    insert into graduate_cert (graduate_id, exam_card_num, graduate_date
+      )
+    values (#{graduateId,jdbcType=VARCHAR}, #{examCardNum,jdbcType=VARCHAR}, #{graduateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.GraduateCert" >
+    insert into graduate_cert
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="graduateId != null" >
+        graduate_id,
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num,
+      </if>
+      <if test="graduateDate != null" >
+        graduate_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="graduateId != null" >
+        #{graduateId,jdbcType=VARCHAR},
+      </if>
+      <if test="examCardNum != null" >
+        #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateDate != null" >
+        #{graduateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.GraduateCert" >
+    update graduate_cert
+    <set >
+      <if test="examCardNum != null" >
+        exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateDate != null" >
+        graduate_date = #{graduateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where graduate_id = #{graduateId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.GraduateCert" >
+    update graduate_cert
+    set exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      graduate_date = #{graduateDate,jdbcType=VARCHAR}
+    where graduate_id = #{graduateId,jdbcType=VARCHAR}
+  </update>
+
+<!--  根据毕业学校查找毕业生-->
+  <select id="queryAllGraduaterBySchool" resultMap="GraduationSchool">
+    SELECT g.exam_card_num,st.name,si.major_num,g.graduate_date,g.graduate_id
+    FROM graduate_cert g,sign_up_info si,student_info st
+    WHERE g.exam_card_num IN(
+        SELECT exam_card_num
+        FROM sign_up_info
+        WHERE sign_up_school=#{school}
+        <if test="examNum != ''">
+          AND exam_num=#{examNum}
+        </if>
+    ) AND g.exam_card_num=si.exam_card_num AND si.student_id=st.student_id
+  </select>
+  <select id="queryAllGraduaterByMajor" resultMap="GraduationStatistic">
+    SELECT g.exam_card_num,st.name,si.major_num,g.graduate_date,g.graduate_id
+    FROM graduate_cert g,sign_up_info si,student_info st
+    WHERE g.exam_card_num IN(
+        SELECT exam_card_num
+        FROM sign_up_info
+        WHERE   1=1
+        <if test="major !=''">
+            AND major_num=#{major}
+        </if>
+        <if test="examNum != ''">
+            AND exam_num=#{examNum}
+        </if>
+    ) AND g.exam_card_num=si.exam_card_num AND si.student_id=st.student_id
+  </select>
+
+<!-- 毕业生查询1：根据地区查询 -->
+  <select id="queryAllGraduaterByArea" resultMap="GraduationStatistic">
+    SELECT g.exam_card_num,st.name,si.major_num,g.graduate_date,g.graduate_id
+    FROM graduate_cert g,sign_up_info si,student_info st
+    WHERE g.exam_card_num IN(
+        SELECT exam_card_num
+        FROM sign_up_info
+        WHERE city_code=#{area}
+    ) AND g.exam_card_num=si.exam_card_num AND si.student_id=st.student_id
+
+  </select>
+
+<!--  根据毕业时间查询，毕业时间为空，查询历次-->
+  <select id="queryAllGraduateByDate" resultMap="GraduationStatistic">
+    SELECT g.exam_card_num,st.name,si.major_num,g.graduate_date,g.graduate_id
+    FROM graduate_cert g,sign_up_info si,student_info st
+    WHERE g.exam_card_num IN(
+        SELECT exam_card_num
+        FROM graduate_cert
+        WHERE 1=1
+        <if test="date!=''">
+          AND graduate_date LIKE #{date}
+        </if>
+
+    ) AND g.exam_card_num=si.exam_card_num AND si.student_id=st.student_id
+
+  </select>
+  <select id="queryAllGraduateCertByStudentId" resultMap="BaseResultMap">
+    SELECT graduate_id ,g.exam_card_num
+    FROM graduate_cert g,sign_up_info s
+    WHERE g.exam_card_num = s.exam_card_num AND student_id = #{studentId}
+  </select>
+  <select id="queryGraduateInfoByEcn" resultMap="GraduateCancleHelper">
+    SELECT g.graduate_id,si.exam_card_num,st.name,st.photo_path
+    FROM graduate_cert g,sign_up_info si,student_info st
+    WHERE si.exam_card_num = #{examCardNum} AND g.exam_card_num = #{examCardNum} AND st.student_id = si.student_id
+  </select>
+
+  <update id="updateStudentInfo">
+    UPDATE student_info
+    SET info_state = 0
+    WHERE student_id IN(
+        SELECT student_id
+        FROM sign_up_info
+        WHERE exam_card_num = #{examCardNum}
+    )
+
+  </update>
+
+  <delete id="deleteGraduateCertByEcm" parameterType="java.lang.String">
+    DELETE FROM graduate_cert
+    WHERE exam_card_num = #{examCardNum}
+  </delete>
+
+
+</mapper>

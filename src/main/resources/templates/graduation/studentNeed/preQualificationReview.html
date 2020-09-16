@@ -1,0 +1,98 @@
+<!-- 前置学历审核 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>前置学历审核</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <div class="container">
+                <div class="row">
+                    <!--  在此编辑内容     -->
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <h1 style="text-align: center;">前置学历审核</h1>
+                        <table class="table">
+                            <tr>
+                                <td  align="center">序号</td><td  align="center">准考证号</td><td  align="center">姓名</td><td colspan="2" align="center">性别</td><td colspan="2" align="center">民族</td><td  align="center">身份证号</td><td  align="center">审核专业</td><td  align="center">头像</td><td  align="center">操作</td>
+                            </tr>
+                            <tr th:each="graduatePre:${graduatePreList}">
+                                <td  align="center" th:text="${graduatePre.getIndex()}"></td><td  align="center" th:text="${graduatePre.getExamCardId()}"><td  align="center" th:text="${graduatePre.getName()}"></td><td colspan="2" align="center" th:text="${graduatePre.getSex()}"></td><td colspan="2" align="center" th:text="${graduatePre.getNation()}"></td><td  align="center" th:text="${graduatePre.getIDCard()}"></td><td  align="center" th:text="${graduatePre.getMajorNum()}"></td><td  align="center">
+                                <a th:href="@{#}" style="color: red">
+                                    <span class="glyphicon glyphicon-user"></span></a>
+                            </td>
+                                <td  align="center">
+                                    <button type="button" class="btn btn-primary" onclick="confirm1(this,1)">同意</button>
+                                    <button type="button" class="btn btn-danger" onclick="confirm1(this,0)">驳回</button>
+                            </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    <!--    美化表格条带式表格-->
+    var classArray = ["active","success","warning","danger","info"];
+    var stuInfos = $(".studentInfo");
+    var i = 0;
+    var j = 0;
+    for(var i = 0;i<stuInfos.length;i++){
+        j = i%classArray.length;
+        stuInfos[i].setAttribute("class",classArray[j]+" studentInfo");
+    }
+
+    function confirm1(event,status) {
+        console.log(event.parentNode.parentNode.children[1].innerHTML);
+        var tr1 = event.parentNode.parentNode;
+        var name = tr1.children[2].innerHTML;
+        var examCardId =tr1.children[1].innerHTML;
+        var  result;
+        if (status==1){
+            result=window.confirm("是否证实了考生: ["+name+"] 的申请?");
+        }else{
+            result=window.confirm("确定驳回考生: ["+name+"] 的申请?");
+        }
+
+        if (result==true){
+            //获取信息,传递给后端
+            $.ajax({
+                url: "/graduation/studentNeed/preQualificationReview",
+                data: {status: status,examCardId:examCardId},
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                }
+            })
+            tr1.parentNode.removeChild(tr1);
+        }
+    }
+
+
+</script>
+</body>
+
+</html>

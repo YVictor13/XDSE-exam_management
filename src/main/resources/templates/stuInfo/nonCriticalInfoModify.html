@@ -1,0 +1,141 @@
+<!-- 考生考籍非关键信息修改 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>考籍非关键信息修改</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+    <style>
+        .myForm{
+            position: relative;
+            top: 30px;
+        }
+        .button1{
+            position: relative;
+            right: -310px;
+        }
+    </style>
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>考籍非关键信息修改</center></h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <!-- 信息表格 -->
+                    <div class="col-md-6">
+                        <table class="table table-bordered  table table-hover">
+                            <caption  style="text-align:center">考生基本信息</caption>
+                            <tbody>
+                            <!--/*@thymesVar id="studentInfo" type="com.example.demo.model.StudentInfo"*/-->
+                            <tr>
+                                <td>考生信息</td>
+                                <td th:text="${studentInfo.getName()}"></td>
+                            </tr>
+                            <tr>
+                                <td>身份证号</td>
+                                <td th:text="${studentInfo.getIdCardNum()}"></td>
+                            </tr>
+                            <tr>
+                                <td>原邮编</td>
+                                <td th:text="${studentInfo.getPostCode()}"></td>
+                            </tr>
+                            <tr>
+                                <td>原电子邮件</td>
+                                <td th:text="${studentInfo.getEmail()}"></td>
+                            </tr>
+                            <tr>
+                                <td>原工作单位</td>
+                                <td th:text="${studentInfo.getWorkPlace()}"></td>
+                            </tr>
+                            <tr>
+                                <td>身体状况</td>
+                                <td th:if="${studentInfo.getHealth()} eq 1">健康</td>
+                                <td th:if="${studentInfo.getHealth()} eq 0">残疾</td>
+                            </tr>
+                            <tr>
+                                <td>原户籍地编码</td>
+                                <td th:text="${studentInfo.getCensusPlace()}"></td>
+                            </tr>
+                            <tr>
+                                <td>原手机号</td>
+                                <td th:text="${studentInfo.getPhoneNumber()}"></td>
+                            </tr>
+                            <tr>
+                                <td>原地址</td>
+                                <td th:text="${studentInfo.getAddress()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 信息提交栏 -->
+                    <div class="col-md-6">
+                        <div class="container">
+                            <form class="form-horizontal" th:action="@{/stuInfo/nonCriticalInfoModify}" method="post">
+                                <!-- 右边的修改输入框，记得改每个每个输入框的id -->
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        新电话号码: <input type="text" class="form-control myset" name="phoneNumber" placeholder="新电话号码">
+                                        新地址: <input type="text" class="form-control myset" name="address" placeholder="新地址">
+                                        新邮编: <input type="text" class="form-control myset" name="postCode" placeholder="新邮编">
+                                        新电子邮件: <input type="text" class="form-control myset" name="email" placeholder="新电子邮件">
+<!--                                        新工作单位: <input type="text" class="form-control" id="" placeholder="新工作单位">-->
+                                        身体状况: <input type="text" class="form-control myset" name="health" placeholder="身体状况">
+                                        新户籍邮编: <input type="text" class="form-control myset" name="consensusCode" placeholder="新户籍邮编">
+                                        <button type="submit" class="btn btn-success">提交申请</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 按钮层  -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-warning button1 onclick="cancelSet()"" >重置</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+<script>
+    // 编写按钮事件处理函数，
+    function cancelSet() {
+        $(".myset").val("");
+    }
+</script>
+
+
+</body>
+</html>

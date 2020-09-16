@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.CourseReplaceApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.CourseReplaceApply" >
+    <id column="apply_id" property="applyId" jdbcType="INTEGER" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="apply_state" property="applyState" jdbcType="INTEGER" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    apply_id, exam_card_num, apply_state, result, start_date, end_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from course_replace_apply
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from course_replace_apply
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.CourseReplaceApply" >
+    insert into course_replace_apply (apply_id, exam_card_num, apply_state, 
+      result, start_date, end_date
+      )
+    values (#{applyId,jdbcType=INTEGER}, #{examCardNum,jdbcType=VARCHAR}, #{applyState,jdbcType=INTEGER}, 
+      #{result,jdbcType=INTEGER}, #{startDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.CourseReplaceApply" >
+    insert into course_replace_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="applyId != null" >
+        apply_id,
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num,
+      </if>
+      <if test="applyState != null" >
+        apply_state,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="applyId != null" >
+        #{applyId,jdbcType=INTEGER},
+      </if>
+      <if test="examCardNum != null" >
+        #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.CourseReplaceApply" >
+    update course_replace_apply
+    <set >
+      <if test="examCardNum != null" >
+        exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        apply_state = #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.CourseReplaceApply" >
+    update course_replace_apply
+    set exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      apply_state = #{applyState,jdbcType=INTEGER},
+      result = #{result,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=VARCHAR},
+      end_date = #{endDate,jdbcType=VARCHAR}
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </update>
+</mapper>

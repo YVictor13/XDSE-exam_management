@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.SignUpInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.SignUpInfo" >
+    <id column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="student_id" property="studentId" jdbcType="VARCHAR" />
+    <result column="exam_num" property="examNum" jdbcType="VARCHAR" />
+    <result column="major_num" property="majorNum" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="region_code" property="regionCode" jdbcType="VARCHAR" />
+    <result column="sign_up_school" property="signUpSchool" jdbcType="VARCHAR" />
+    <result column="sign_up_type" property="signUpType" jdbcType="INTEGER" />
+    <result column="sign_up_date" property="signUpDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    exam_card_num, student_id, exam_num, major_num, city_code, region_code, sign_up_school, 
+    sign_up_type, sign_up_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sign_up_info
+    where exam_card_num = #{examCardNum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sign_up_info
+    where exam_card_num = #{examCardNum,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.SignUpInfo" >
+    insert into sign_up_info (exam_card_num, student_id, exam_num, 
+      major_num, city_code, region_code, 
+      sign_up_school, sign_up_type, sign_up_date
+      )
+    values (#{examCardNum,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, #{examNum,jdbcType=VARCHAR}, 
+      #{majorNum,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{regionCode,jdbcType=VARCHAR}, 
+      #{signUpSchool,jdbcType=VARCHAR}, #{signUpType,jdbcType=INTEGER}, #{signUpDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.SignUpInfo" >
+    insert into sign_up_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="examCardNum != null" >
+        exam_card_num,
+      </if>
+      <if test="studentId != null" >
+        student_id,
+      </if>
+      <if test="examNum != null" >
+        exam_num,
+      </if>
+      <if test="majorNum != null" >
+        major_num,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="regionCode != null" >
+        region_code,
+      </if>
+      <if test="signUpSchool != null" >
+        sign_up_school,
+      </if>
+      <if test="signUpType != null" >
+        sign_up_type,
+      </if>
+      <if test="signUpDate != null" >
+        sign_up_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="examCardNum != null" >
+        #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null" >
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="examNum != null" >
+        #{examNum,jdbcType=VARCHAR},
+      </if>
+      <if test="majorNum != null" >
+        #{majorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionCode != null" >
+        #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="signUpSchool != null" >
+        #{signUpSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="signUpType != null" >
+        #{signUpType,jdbcType=INTEGER},
+      </if>
+      <if test="signUpDate != null" >
+        #{signUpDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.SignUpInfo" >
+    update sign_up_info
+    <set >
+      <if test="studentId != null" >
+        student_id = #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="examNum != null" >
+        exam_num = #{examNum,jdbcType=VARCHAR},
+      </if>
+      <if test="majorNum != null" >
+        major_num = #{majorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionCode != null" >
+        region_code = #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="signUpSchool != null" >
+        sign_up_school = #{signUpSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="signUpType != null" >
+        sign_up_type = #{signUpType,jdbcType=INTEGER},
+      </if>
+      <if test="signUpDate != null" >
+        sign_up_date = #{signUpDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where exam_card_num = #{examCardNum,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.SignUpInfo" >
+    update sign_up_info
+    set student_id = #{studentId,jdbcType=VARCHAR},
+      exam_num = #{examNum,jdbcType=VARCHAR},
+      major_num = #{majorNum,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      region_code = #{regionCode,jdbcType=VARCHAR},
+      sign_up_school = #{signUpSchool,jdbcType=VARCHAR},
+      sign_up_type = #{signUpType,jdbcType=INTEGER},
+      sign_up_date = #{signUpDate,jdbcType=VARCHAR}
+    where exam_card_num = #{examCardNum,jdbcType=VARCHAR}
+  </update>
+
+  <select id="queryExamCardNumById" parameterType="java.lang.String" resultType="java.lang.String">
+    select exam_card_num
+    from sign_up_info
+    where student_id = #{studentId}
+  </select>
+
+  <resultMap id="BasicInfoMap" type="com.example.demo.dto.StuBasicInfo" >
+    <id column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="photo_path" property="photoPath" jdbcType="VARCHAR" />
+    <result column="student_id" property="studentId" jdbcType="VARCHAR" />
+    <result column="political" property="political" jdbcType="INTEGER" />
+    <result column="nation" property="nation" jdbcType="INTEGER" />
+    <result column="census_place" property="censusPlace" jdbcType="INTEGER" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="major_name" property="majorName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getStuBasicInfoByECN" parameterType="java.lang.String"
+          resultMap="BasicInfoMap" resultType="com.example.demo.dto.StuBasicInfo">
+    select exam_card_num, name, sex, photo_path, sign_up_info.student_id, political, nation, census_place, phone_number, email,major_name
+    from sign_up_info inner join student_info on sign_up_info.student_id = student_info.student_id
+        inner join major m on sign_up_info.major_num = m.major_num
+    where exam_card_num = #{ecn,jdbcType=VARCHAR}
+  </select>
+  <select id="getStuBasicInfoByExamNum" parameterType="java.lang.String"
+          resultMap="BasicInfoMap" resultType="com.example.demo.dto.StuBasicInfo">
+    select exam_card_num, name, sex, photo_path, sign_up_info.student_id, political, nation, census_place, phone_number, email,major_name
+    from sign_up_info inner join student_info on sign_up_info.student_id = student_info.student_id
+                      inner join major m on sign_up_info.major_num = m.major_num
+    where exam_num = #{examNum,jdbcType=VARCHAR}
+  </select>
+  <select id="getStuBasicInfoByQMS" parameterType="com.example.demo.dto.QuitManageSearch"
+          resultMap="BasicInfoMap" resultType="com.example.demo.dto.StuBasicInfo">
+    select exam_card_num, name, sex, photo_path, sign_up_info.student_id, political, nation, census_place, phone_number, email,major_name
+    from sign_up_info inner join student_info on sign_up_info.student_id = student_info.student_id
+                      inner join major m on sign_up_info.major_num = m.major_num
+    where info_state = 0
+      <if test='!examCardNum.equals("")'>
+        and exam_card_num = #{examCardNum,jdbcType=VARCHAR}
+      </if>
+      <if test="examNum != null">
+        and exam_num = #{examNum,jdbcType=VARCHAR}
+      </if>
+    <!--分页由拦截器实现（第三方依赖page helper-->
+  </select>
+  <!--  List<String> getStuIdByECN(List<String> ecnList);-->
+  <select id="getStuIdByECN" parameterType="java.util.List"
+          resultType="java.lang.String">
+    select student_id
+    from sign_up_info
+    where exam_card_num in
+    <foreach item="item" index="index" collection="ecnList" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+</mapper>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.InfoChangeLogMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.InfoChangeLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="id_card_type" property="idCardType" jdbcType="INTEGER" />
+    <result column="id_card_num" property="idCardNum" jdbcType="VARCHAR" />
+    <result column="change_content" property="changeContent" jdbcType="VARCHAR" />
+    <result column="change_date" property="changeDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, exam_card_num, id_card_type, id_card_num, change_content, change_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from info_change_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from info_change_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.InfoChangeLog" >
+    insert into info_change_log (id, exam_card_num, id_card_type, 
+      id_card_num, change_content, change_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{examCardNum,jdbcType=VARCHAR}, #{idCardType,jdbcType=INTEGER}, 
+      #{idCardNum,jdbcType=VARCHAR}, #{changeContent,jdbcType=VARCHAR}, #{changeDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.InfoChangeLog" >
+    insert into info_change_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num,
+      </if>
+      <if test="idCardType != null" >
+        id_card_type,
+      </if>
+      <if test="idCardNum != null" >
+        id_card_num,
+      </if>
+      <if test="changeContent != null" >
+        change_content,
+      </if>
+      <if test="changeDate != null" >
+        change_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="examCardNum != null" >
+        #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardType != null" >
+        #{idCardType,jdbcType=INTEGER},
+      </if>
+      <if test="idCardNum != null" >
+        #{idCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="changeContent != null" >
+        #{changeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="changeDate != null" >
+        #{changeDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.InfoChangeLog" >
+    update info_change_log
+    <set >
+      <if test="examCardNum != null" >
+        exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardType != null" >
+        id_card_type = #{idCardType,jdbcType=INTEGER},
+      </if>
+      <if test="idCardNum != null" >
+        id_card_num = #{idCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="changeContent != null" >
+        change_content = #{changeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="changeDate != null" >
+        change_date = #{changeDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.InfoChangeLog" >
+    update info_change_log
+    set exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      id_card_type = #{idCardType,jdbcType=INTEGER},
+      id_card_num = #{idCardNum,jdbcType=VARCHAR},
+      change_content = #{changeContent,jdbcType=VARCHAR},
+      change_date = #{changeDate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

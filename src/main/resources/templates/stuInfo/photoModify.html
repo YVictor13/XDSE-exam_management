@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>照片修改</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <style>
+        .photo{
+            position: relative;
+            background-color: white;
+            margin: 0 auto;
+            width: 146px;
+            height: 165px;
+            margin-top: 81px;
+        }
+        img{
+            position: relative;
+            width: 146px;
+            height: 165px;
+            top: -20px;
+            opacity:1;
+            filter:alpha(opacity=100);
+        }
+        img:hover{
+            position: relative;
+            width: 146px;
+            height: 165px;
+            top: -20px;
+
+            z-index:99999999999;
+            opacity:0.3;
+            filter:alpha(opacity=70);
+        }
+        /*伪元素显示默认图片*/
+        img:after{
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/imgs/bi.png') #ccc;
+        }
+        .stu_nam{
+            font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+            font-weight: bold;
+        }
+        .img_info{
+            position: relative;
+            top: 139px;
+            left: 39px;
+            background-color: blue;
+            color: white;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--  页面标题栏  -->
+        <div >
+            <h2><center>考生照片修改</center></h2>
+            <br>
+        </div>
+        <!--    内容框架-->
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+
+            <div class="container">
+                <div class="row">
+                    <!--  在此编辑内容     -->
+<!--                    搜索框
+                   考生信息-->
+
+
+                    <div class="col-md-2">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+
+                        <form action="/stuInfo/photoModify" method="post">
+                            <!-- 输入框  -->
+                        <div class="row">
+                                <div class="col-md-14 myselect_1">
+                                    <span>  请输入考生准考证号：</span>
+                                </div>
+                                <br>
+                                <div class="col-md-2">
+                                    <input id="searchInput" type="text" class="form-control myselect_2"
+                                           name="ecn" placeholder="考生准考证号" style="width: 230px">
+                                </div>
+
+                        </div>
+
+                        <!-- 确认按钮  -->
+                        <div class="row">
+                            <br>
+                            <br>
+                            <div class="col-md-1">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-warning ydr" >重置</button>
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-success">查询</button>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <!-- 中间留一点空格  -->
+                    <div class="col-md-2">
+
+                    </div>
+
+
+
+
+                    <div class="col-md-3">
+                        <div class="album" style="position: relative;top: -25px;">
+                            <div class="col-lg-2">
+                                <div class="photo">
+                                    <input type="file" class="addimg" style="display: none;" name="addimg" accept="image/*" onchange="imgLoad(this)">
+                                    <span class="img_info" style="visibility: hidden">点击更改</span>
+                                    <!--<img th:src="@{~/imgs/bi.png}"class="img_event" onload="firstImgLoad()" onmouseenter="imgIn(this)" onmouseleave="imgOut(this)"  onclick="photo_add(this)">-->
+                                    <img th:src="'/'+${stuBasicInfo.getPhotoPath()}" class="img_event" onmouseenter="imgIn(this)" onmouseleave="imgOut(this)"  onclick="photo_add(this)">
+                                </div>
+                            </div>
+                        </div>
+                        <span style="position:relative;top: 235px;font-size: larger">考生照片</span>
+                    </div>
+                    <!--表格显示信息部分-->
+                <div class="col-md-5">
+                    <h3 style="text-align: center;">考生基本信息表</h3>
+                    <table class="table">
+                        <!--/*@thymesVar id="getName" type="com.example.demo.dto.StuBasicInfo"*/-->
+                        <tr>
+                            <td>姓名</td>
+                            <td th:text="${stuBasicInfo.getName()}"></td>
+                            <td>性别</td>
+                            <td th:text="${stuBasicInfo.getSex()}"></td>
+                        </tr>
+                        <tr>
+                            <td>考生ID</td>
+                            <td th:text="${stuBasicInfo.getStudentId()}"></td>
+                            <td>准考证号</td>
+                            <td id="ecnLabel" th:text="${stuBasicInfo.getExamCardNum()}"></td>
+                        </tr>
+                        <tr>
+                            <td>政治面貌</td>
+                            <td th:text="${stuBasicInfo.getPolitical()}"></td>
+                            <td>民族</td>
+                            <td th:text="${stuBasicInfo.getNation()}"></td>
+                        </tr>
+                        <tr>
+                            <td>户籍地址</td>
+                            <td th:text="${stuBasicInfo.getCensusPlace()}"></td>
+                            <td>专业</td>
+                            <td th:text="${stuBasicInfo.getMajorName()}"></td>
+                        </tr>
+                        <tr>
+                            <td>电话</td>
+                            <td th:text="${stuBasicInfo.getPhoneNumber()}"></td>
+                            <td>电子邮编</td>
+                            <td th:text="${stuBasicInfo.getEmail()}"></td>
+                        </tr>
+                    </table>
+                 <!--上传按钮-->
+                    <button type="button" class="btn btn-warning ydr" >重置</button>
+                    <button type="button" class="btn btn-success" onclick="imgUpload()" style="position:relative;left: 250px">确认上传</button>
+
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    // 全局变量，待上传文件，由img标签设置，由上传按钮读取
+    let uploadFile=''
+    function imgIn(event) {
+        var current_img = event.parentNode.children[1];
+        current_img.style.visibility = "visible";
+    }
+    function imgOut(event) {
+        $(".img_info").css("visibility","hidden");
+    }
+    //修改图片
+    function photo_add(event) {
+
+        var input_file=event.parentNode.children[0];
+        input_file.click();
+    }
+    function imgLoad(event){
+        let currentImg = event.parentNode.children[2];
+        uploadFile = event.files[0]
+        let new_img = URL.createObjectURL(event.files[0]);
+        currentImg.setAttribute("src",new_img);
+    }
+    function imgUpload(event){
+        let formData = new FormData();
+        console.log(uploadFile)
+        formData.append('file', uploadFile);
+        let ecn = $('#ecnLabel').text()
+        formData.append('ECN', ecn);
+        $.ajax({
+                url: "/stuInfo/photoModify/upload",
+                type: "POST",
+                data: formData,
+                success: function (data){
+                    console.log('success')
+                    if(data.errorCode===0){
+                        alert('图片修改成功')
+                    }
+                    else{
+                        alert(data.message)
+                    }
+                },
+                error: function (data){
+                    alert("上传文件失败")
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            }
+        )
+
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.OneClassApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.OneClassApply" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="old_ecn" property="oldEcn" jdbcType="VARCHAR" />
+    <result column="new_ecn" property="newEcn" jdbcType="VARCHAR" />
+    <result column="old_course_code" property="oldCourseCode" jdbcType="VARCHAR" />
+    <result column="new_course_code" property="newCourseCode" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="region_code" property="regionCode" jdbcType="VARCHAR" />
+    <result column="apply_state" property="applyState" jdbcType="INTEGER" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, old_ecn, new_ecn, old_course_code, new_course_code, city_code, region_code, apply_state, 
+    result, start_date, end_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from one_class_apply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from one_class_apply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.OneClassApply" >
+    insert into one_class_apply (id, old_ecn, new_ecn, 
+      old_course_code, new_course_code, city_code, 
+      region_code, apply_state, result, 
+      start_date, end_date)
+    values (#{id,jdbcType=INTEGER}, #{oldEcn,jdbcType=VARCHAR}, #{newEcn,jdbcType=VARCHAR}, 
+      #{oldCourseCode,jdbcType=VARCHAR}, #{newCourseCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{regionCode,jdbcType=VARCHAR}, #{applyState,jdbcType=INTEGER}, #{result,jdbcType=INTEGER}, 
+      #{startDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.OneClassApply" >
+    insert into one_class_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="oldEcn != null" >
+        old_ecn,
+      </if>
+      <if test="newEcn != null" >
+        new_ecn,
+      </if>
+      <if test="oldCourseCode != null" >
+        old_course_code,
+      </if>
+      <if test="newCourseCode != null" >
+        new_course_code,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="regionCode != null" >
+        region_code,
+      </if>
+      <if test="applyState != null" >
+        apply_state,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="oldEcn != null" >
+        #{oldEcn,jdbcType=VARCHAR},
+      </if>
+      <if test="newEcn != null" >
+        #{newEcn,jdbcType=VARCHAR},
+      </if>
+      <if test="oldCourseCode != null" >
+        #{oldCourseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="newCourseCode != null" >
+        #{newCourseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionCode != null" >
+        #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.OneClassApply" >
+    update one_class_apply
+    <set >
+      <if test="oldEcn != null" >
+        old_ecn = #{oldEcn,jdbcType=VARCHAR},
+      </if>
+      <if test="newEcn != null" >
+        new_ecn = #{newEcn,jdbcType=VARCHAR},
+      </if>
+      <if test="oldCourseCode != null" >
+        old_course_code = #{oldCourseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="newCourseCode != null" >
+        new_course_code = #{newCourseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionCode != null" >
+        region_code = #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        apply_state = #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.OneClassApply" >
+    update one_class_apply
+    set old_ecn = #{oldEcn,jdbcType=VARCHAR},
+      new_ecn = #{newEcn,jdbcType=VARCHAR},
+      old_course_code = #{oldCourseCode,jdbcType=VARCHAR},
+      new_course_code = #{newCourseCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      region_code = #{regionCode,jdbcType=VARCHAR},
+      apply_state = #{applyState,jdbcType=INTEGER},
+      result = #{result,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=VARCHAR},
+      end_date = #{endDate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryAllApplyByState" resultMap="BaseResultMap">
+    select *
+    from one_class_apply
+    where apply_state=#{state}
+  </select>
+  <update id="updateApplyState" parameterType="java.lang.Integer">
+    update one_class_apply
+    set apply_state=#{stateCode}
+    where id = #{id}
+  </update>
+    <update id="endOneAply">
+    update one_class_apply
+    set apply_state=#{stateCode},
+        result = #{resCode},
+        end_date = #{endDate}
+    where id = #{id}
+    </update>
+</mapper>

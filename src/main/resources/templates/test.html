@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>毕业证学籍领取查询</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>毕业证学籍领取查询</center></h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <!-- 选择输入部分 -->
+                    <div class="col-md-7">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <!-- 输入框  -->
+                        <div class="row">
+
+                            <div class="col-md-12 myselect_2">
+                                <span>请输入考生准考证号：</span> <!-- 能获取到当前登录考生的ID也不用手动输入 -->
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control myselect_2" placeholder="Text input">
+                            </div>
+
+                        </div>
+
+                        <!-- 确认按钮  -->
+                        <div class="row">
+                            <br>
+                            <br>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-warning" >重置</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-success">查询</button>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- 中间留一点空格  -->
+                    <div class="col-md-1">
+
+                    </div>
+                    <!-- 右边查询结果部分 -->
+                    <div class="col-md-4">
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.ThreeClassApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.ThreeClassApply" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="card_num" property="cardNum" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="INTEGER" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="new_course_code" property="newCourseCode" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="region_code" property="regionCode" jdbcType="VARCHAR" />
+    <result column="apply_state" property="applyState" jdbcType="INTEGER" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, card_num, card_type, exam_card_num, new_course_code, city_code, region_code, 
+    apply_state, result, start_date, end_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from three_class_apply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from three_class_apply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.ThreeClassApply" >
+    insert into three_class_apply (id, card_num, card_type, 
+      exam_card_num, new_course_code, city_code, 
+      region_code, apply_state, result, 
+      start_date, end_date)
+    values (#{id,jdbcType=INTEGER}, #{cardNum,jdbcType=VARCHAR}, #{cardType,jdbcType=INTEGER}, 
+      #{examCardNum,jdbcType=VARCHAR}, #{newCourseCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{regionCode,jdbcType=VARCHAR}, #{applyState,jdbcType=INTEGER}, #{result,jdbcType=INTEGER}, 
+      #{startDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.ThreeClassApply" >
+    insert into three_class_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cardNum != null" >
+        card_num,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num,
+      </if>
+      <if test="newCourseCode != null" >
+        new_course_code,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="regionCode != null" >
+        region_code,
+      </if>
+      <if test="applyState != null" >
+        apply_state,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cardNum != null" >
+        #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=INTEGER},
+      </if>
+      <if test="examCardNum != null" >
+        #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="newCourseCode != null" >
+        #{newCourseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionCode != null" >
+        #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.ThreeClassApply" >
+    update three_class_apply
+    <set >
+      <if test="cardNum != null" >
+        card_num = #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=INTEGER},
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="newCourseCode != null" >
+        new_course_code = #{newCourseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionCode != null" >
+        region_code = #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        apply_state = #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.ThreeClassApply" >
+    update three_class_apply
+    set card_num = #{cardNum,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=INTEGER},
+      exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      new_course_code = #{newCourseCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      region_code = #{regionCode,jdbcType=VARCHAR},
+      apply_state = #{applyState,jdbcType=INTEGER},
+      result = #{result,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=VARCHAR},
+      end_date = #{endDate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <resultMap id="ThreeClassHelper" type="com.example.demo.model.helper.ThreeClassApplyHelper">
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="region_code" property="regionCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryCityAndRegionByEcn" resultMap="ThreeClassHelper">
+    SELECT city_code,region_code
+    FROM sign_up_info s
+    WHERE exam_card_num=#{xamCardNum}
+  </select>
+
+  <select id="queryAllByState" resultMap="BaseResultMap">
+    select * from three_class_apply where apply_state=#{state}
+  </select>
+
+  <update id="updateThreeApplyState" parameterType="java.lang.Integer">
+    update three_class_apply
+    set apply_state=#{stateCode}
+    where id = #{id}
+  </update>
+
+  <update id="endThreeApply">
+    update three_class_apply
+    set apply_state=#{stateCode},
+        result = #{resCode},
+        end_date = #{endDate}
+    where id = #{id}
+  </update>
+</mapper>

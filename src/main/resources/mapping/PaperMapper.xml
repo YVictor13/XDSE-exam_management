@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.PaperMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Paper" >
+    <id column="paper_id" property="paperId" jdbcType="VARCHAR" />
+    <result column="paper_name" property="paperName" jdbcType="VARCHAR" />
+    <result column="pub_date" property="pubDate" jdbcType="VARCHAR" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    paper_id, paper_name, pub_date, exam_card_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from paper
+    where paper_id = #{paperId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from paper
+    where paper_id = #{paperId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.Paper" >
+    insert into paper (paper_id, paper_name, pub_date, 
+      exam_card_num)
+    values (#{paperId,jdbcType=VARCHAR}, #{paperName,jdbcType=VARCHAR}, #{pubDate,jdbcType=VARCHAR}, 
+      #{examCardNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.Paper" >
+    insert into paper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paperId != null" >
+        paper_id,
+      </if>
+      <if test="paperName != null" >
+        paper_name,
+      </if>
+      <if test="pubDate != null" >
+        pub_date,
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paperId != null" >
+        #{paperId,jdbcType=VARCHAR},
+      </if>
+      <if test="paperName != null" >
+        #{paperName,jdbcType=VARCHAR},
+      </if>
+      <if test="pubDate != null" >
+        #{pubDate,jdbcType=VARCHAR},
+      </if>
+      <if test="examCardNum != null" >
+        #{examCardNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Paper" >
+    update paper
+    <set >
+      <if test="paperName != null" >
+        paper_name = #{paperName,jdbcType=VARCHAR},
+      </if>
+      <if test="pubDate != null" >
+        pub_date = #{pubDate,jdbcType=VARCHAR},
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where paper_id = #{paperId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Paper" >
+    update paper
+    set paper_name = #{paperName,jdbcType=VARCHAR},
+      pub_date = #{pubDate,jdbcType=VARCHAR},
+      exam_card_num = #{examCardNum,jdbcType=VARCHAR}
+    where paper_id = #{paperId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,206 @@
+<!-- 业务办理时间设置 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>业务办理时间设置</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+    <style>
+        .label1{
+            width: 195px;
+        }
+        .myinput {
+            width: 118px;
+            height: 30px;
+            margin-left: 6px;
+        }
+        .label2{
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>业务办理时间管理</center></h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <!-- 前面间隔 -->
+                    <div class="col-md-1">
+                    </div>
+                    <!-- 开始时间 -->
+                    <div class="col-md-4">
+                        <div class="container">
+                            <form class="form-horizontal" th:action="@{/stuInfo/timeManage}" method="post">
+                                <div class="col-lg-6">
+                                    <!-- 右边的修改输入框，记得改每个每个输入框的id -->
+                                    <div class="form-group">
+                                        <input name="userId0" style="display: none" value="0">
+                                        <label  class="col-sm-2 control-label label1">在线申请办理时间设置：</label>
+                                        <div class="col-sm-6">
+                                            <!--/*@thymesVar id="timeManage0" type="com.example.demo.model.TimeManage"*/-->
+                                            <input type="date" class=" myinput_3 rebuild" id="input" name="beginTime0" th:value="${timeManage0.getBeginTime()}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="userId1" style="display: none" value="1">
+                                        <label  class="col-sm-2 control-label label1">区县审核时间设置：</label>
+                                        <div class="col-sm-6">
+                                            <!--/*@thymesVar id="timeManage1" type="com.example.demo.model.TimeManage"*/-->
+                                            <input type="date" class="form-control myinput_3 rebuild" id="input1"name="beginTime1" th:value="${timeManage1.getBeginTime()}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="userId2" style="display: none" value="2">
+                                        <label  class="col-sm-2 control-label label1">市州审核时间设置：</label>
+                                        <div class="col-sm-6">
+                                            <!--/*@thymesVar id="timeManage2" type="com.example.demo.model.TimeManage"*/-->
+                                            <input type="date" class="form-control myinput_3 rebuild" id="input2" name="beginTime2" th:value="${timeManage2.getBeginTime()}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="userId3" style="display: none" value="3">
+                                        <label  class="col-sm-2 control-label  label1">考试院审核时间设置：</label>
+                                        <div class="col-sm-6">
+                                            <!--/*@thymesVar id="timeManage3" type="com.example.demo.model.TimeManage"*/-->
+                                            <input type="date" class="form-control myinput_3 rebuild" id="input3" name="beginTime3" th:value="${timeManage3.getBeginTime()}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="userId4" style="display: none" value="4">
+                                        <label  class="col-sm-2 control-label label1">确认入库时间设置：</label>
+                                        <div class="col-sm-6">
+                                            <!--/*@thymesVar id="timeManage4" type="com.example.demo.model.TimeManage"*/-->
+                                            <input type="date" class="form-control myinput_3 rebuild" id="input4" name="beginTime4" th:value="${timeManage4.getBeginTime()}">
+                                        </div>
+                                    </div>
+
+                                </div>
+                               <div class="col-md-5">
+                                   <!-- 右边的修改输入框，记得改每个输入框的id -->
+                                   <div class="form-group">
+                                       <label  class="col-sm-2 control-label label2">结束时间：</label>
+                                       <div class="col-sm-6">
+                                           <!--/*@thymesVar id="timeManage0" type="com.example.demo.model.TimeManage"*/-->
+                                           <input type="date" class="form-control myinput_3 rebuild" id="input`" name="endTime0" th:value="${timeManage0.getEndTime()}">
+                                       </div>
+                                   </div>
+                                   <div class="form-group">
+                                       <label  class="col-sm-2 control-label label2">结束时间：</label>
+                                       <div class="col-sm-6">
+                                           <!--/*@thymesVar id="timeManage1" type="com.example.demo.model.TimeManage"*/-->
+                                           <input type="date" class="form-control myinput_3 rebuild" id="input="  name="endTime1" th:value="${timeManage1.getEndTime()}">
+                                       </div>
+                                   </div>
+                                   <div class="form-group">
+                                       <label  class="col-sm-2 control-label label2">结束时间：</label>
+                                       <div class="col-sm-6">
+                                           <!--/*@thymesVar id="timeManage2" type="com.example.demo.model.TimeManage"*/-->
+                                           <input type="date" class="form-control myinput_3 rebuild" id="input-" name="endTime2" th:value="${timeManage2.getEndTime()}">
+                                       </div>
+                                   </div>
+                                   <div class="form-group">
+                                       <label  class="col-sm-2 control-label label2">结束时间：</label>
+                                       <div class="col-sm-6">
+                                           <!--/*@thymesVar id="timeManage3" type="com.example.demo.model.TimeManage"*/-->
+                                           <input type="date" class="form-control myinput_3 rebuild" id="input0"  name="endTime3" th:value="${timeManage3.getEndTime()}">
+                                       </div>
+                                   </div>
+                                   <div class="form-group">
+                                       <label  class="col-sm-2 control-label label2">结束时间：</label>
+                                       <div class="col-sm-6">
+                                           <!--/*@thymesVar id="timeManage4" type="com.example.demo.model.TimeManage"*/-->
+                                           <input type="date" class="form-control myinput_3 rebuild" id="input9"  name="endTime4" th:value="${timeManage4.getEndTime()}">
+                                       </div>
+                                   </div>
+                               </div>
+
+                                <!-- 按钮层  -->
+                                <div class="row">
+                                    <div class="col-md-3">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-warning" onclick="rebuild()">重置</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-success">确认提交</button>
+                                    </div>
+                                    <div class="col-md-3">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- 中间间隔 -->
+                    <div class="col-md-1">
+                    </div>
+
+                    <!-- 结束时间 -->
+                    <div class="col-md-4">
+                        <div class="container">
+                            <form class="form-horizontal">
+
+
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- 后面间隔 -->
+                    <div class="col-md-1">
+                    </div>
+                </div>
+
+                <br>
+                <br>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    function rebuild(){
+        var dates = $(".rebuild");
+        for (var i=0;i<dates.length;i++){
+            // console.log($(".rebuild")[0].innerText);
+            $(".rebuild")[i].value="";
+            // console.log($(".rebuild")[i].innerText);
+        }
+
+        // console.log($(".rebuild")[0].value)
+    }
+
+</script>
+</body>
+</html>

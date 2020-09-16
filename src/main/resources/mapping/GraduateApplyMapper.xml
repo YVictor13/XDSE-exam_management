@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.GraduateApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.GraduateApply" >
+    <id column="apply_id" property="applyId" jdbcType="INTEGER" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="apply_state" property="applyState" jdbcType="INTEGER" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="GraduateApplyHelper" type="com.example.demo.model.helper.GraduateApplyHelper">
+    <result column="apply_id" property="applyId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="id_card_num" property="idCardNum" jdbcType="VARCHAR" />
+    <result column="nation" property="nation" jdbcType="INTEGER" />
+    <result column="major_num" property="majorNum" jdbcType="VARCHAR" />
+    <result column="photo_path" property="photoPath" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    apply_id, exam_card_num, apply_state, result, start_date, end_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from graduate_apply
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from graduate_apply
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.GraduateApply" >
+    insert into graduate_apply (apply_id, exam_card_num, apply_state, 
+      result, start_date, end_date
+      )
+    values (#{applyId,jdbcType=INTEGER}, #{examCardNum,jdbcType=VARCHAR}, #{applyState,jdbcType=INTEGER}, 
+      #{result,jdbcType=INTEGER}, #{startDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.GraduateApply" >
+    insert into graduate_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="applyId != null" >
+        apply_id,
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num,
+      </if>
+      <if test="applyState != null" >
+        apply_state,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="applyId != null" >
+        #{applyId,jdbcType=INTEGER},
+      </if>
+      <if test="examCardNum != null" >
+        #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.GraduateApply" >
+    update graduate_apply
+    <set >
+      <if test="examCardNum != null" >
+        exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        apply_state = #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.GraduateApply" >
+    update graduate_apply
+    set exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      apply_state = #{applyState,jdbcType=INTEGER},
+      result = #{result,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=VARCHAR},
+      end_date = #{endDate,jdbcType=VARCHAR}
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryAllGraduateApplyByState" resultMap="GraduateApplyHelper">
+    SELECT g.apply_id,st.name,st.sex,st.id_card_num,st.nation,si.major_num,st.photo_path
+    FROM graduate_apply g,sign_up_info si,student_info st
+    WHERE si.exam_card_num = g.exam_card_num AND st.student_id = si.student_id AND g.apply_state=#{applyState}
+  </select>
+
+  <update id="updateGraduateApplyStateById">
+    update graduate_apply
+    set apply_state = #{applyState},
+        end_date = #{endDate}
+    where apply_id = #{applyId}
+  </update>
+
+  <select id="queryAllSchool" resultType="java.lang.String">
+     SELECT DISTINCT sign_up_school
+     FROM sign_up_info
+  </select>
+
+  <select id="queryAllMajor" resultType="java.lang.String">
+    SELECT DISTINCT major_num
+    FROM sign_up_info
+  </select>
+
+  <select id="queryAllCityCode" resultType="java.lang.String">
+    SELECT DISTINCT city_code
+    FROM sign_up_info
+  </select>
+
+  <resultMap id="ReadyGraduationHelper" type="com.example.demo.model.helper.ReadyGraduationHelper">
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="exam_num" property="examNum" jdbcType="VARCHAR" />
+    <result column="major_num" property="majorNum" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="region_code" property="regionCode" jdbcType="VARCHAR" />
+    <result column="sign_up_school" property="signUpSchool" jdbcType="VARCHAR" />
+    <result column="sign_up_type" property="signUpType" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="queryAllReadyGra" resultMap="ReadyGraduationHelper">
+      SELECT g.id,si.`exam_card_num`,si.`exam_num`,si.`major_num`,si.`sign_up_type`,si.`city_code`,si.`region_code`,si.`sign_up_school`
+      FROM graduate_pre_apply g,sign_up_info si
+      WHERE result = 1 AND g.exam_card_num = si.`exam_card_num`
+  </select>
+
+  <resultMap id="GraduationHeplerMap" type="com.example.demo.model.helper.GraduateCertHelper">
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="student_id" property="studentId" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryStuIdAndEcnByApplyId" resultMap="GraduationHeplerMap">
+    SELECT s.`student_id`,s.`exam_card_num`
+    FROM graduate_apply g,sign_up_info s
+    WHERE g.`apply_id`=#{aplyId} AND g.`exam_card_num`=s.`exam_card_num`
+  </select>
+</mapper>

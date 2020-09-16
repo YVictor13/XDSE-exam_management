@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.GradeMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Grade" >
+    <id column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <id column="course_code" property="courseCode" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="grade_type" property="gradeType" jdbcType="INTEGER" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="putin_state" property="putinState" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.example.demo.model.helper.GradeForOneClass" >
+    <id column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <id column="course_code" property="courseCode" jdbcType="VARCHAR" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="region_code" property="regionCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    exam_card_num, course_code, grade, grade_type, valid, putin_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demo.model.GradeKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from grade
+    where exam_card_num = #{examCardNum,jdbcType=VARCHAR}
+      and course_code = #{courseCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.demo.model.GradeKey" >
+    delete from grade
+    where exam_card_num = #{examCardNum,jdbcType=VARCHAR}
+      and course_code = #{courseCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.Grade" >
+    insert into grade (exam_card_num, course_code, grade, 
+      grade_type, valid, putin_state
+      )
+    values (#{examCardNum,jdbcType=VARCHAR}, #{courseCode,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, 
+      #{gradeType,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, #{putinState,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.Grade" >
+    insert into grade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="examCardNum != null" >
+        exam_card_num,
+      </if>
+      <if test="courseCode != null" >
+        course_code,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="gradeType != null" >
+        grade_type,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="putinState != null" >
+        putin_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="examCardNum != null" >
+        #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="courseCode != null" >
+        #{courseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeType != null" >
+        #{gradeType,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="putinState != null" >
+        #{putinState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Grade" >
+    update grade
+    <set >
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeType != null" >
+        grade_type = #{gradeType,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="putinState != null" >
+        putin_state = #{putinState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where exam_card_num = #{examCardNum,jdbcType=VARCHAR}
+      and course_code = #{courseCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Grade" >
+    update grade
+    set grade = #{grade,jdbcType=VARCHAR},
+      grade_type = #{gradeType,jdbcType=INTEGER},
+      valid = #{valid,jdbcType=INTEGER},
+      putin_state = #{putinState,jdbcType=INTEGER}
+    where exam_card_num = #{examCardNum,jdbcType=VARCHAR}
+      and course_code = #{courseCode,jdbcType=VARCHAR}
+  </update>
+
+  <select id="queryGradeByCardNum" parameterType="java.lang.String" resultMap="BaseResultMap1">
+    SELECT g.exam_card_num,g.course_code,c.course_name,g.grade,g.valid,s.city_code,s.region_code
+    FROM grade g,course c,sign_up_info s
+    WHERE g.exam_card_num=#{examCardNum} AND
+            g.course_code= c.course_code AND
+            s.exam_card_num=#{examCardNum} AND g.valid=1
+  </select>
+
+<!--  查找分数-->
+  <select id="queryGradeByPrimary" resultType="java.lang.String">
+    select grade
+    from grade
+    where exam_card_num=#{examCardNum} and course_code=#{courseCode}
+  </select>
+
+  <select id="queryGradeForTwoClass" resultType="java.lang.String">
+
+    SELECT grade
+    FROM grade g
+    WHERE (exam_card_num,g.course_code) IN (
+        SELECT gc.exam_card_num,old_course_code
+        FROM two_class_apply t,graduate_cert gc
+        WHERE apply_state=3 AND gc.graduate_id=#{graduateId} AND t.old_course_code=#{courseCode}
+
+    )
+  </select>
+</mapper>

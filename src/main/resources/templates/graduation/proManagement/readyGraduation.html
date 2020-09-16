@@ -1,0 +1,160 @@
+<!-- 毕业生预提页面  -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>毕业生预提页面</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>毕业生预提管理</center></h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <!-- 选择输入部分 -->
+                    <div class="col-md-2">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+
+                        <!-- 确认按钮  -->
+                        <div class="row">
+                            <br>
+                            <br>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-success" onclick="readyQuery()">毕业生预提</button>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- 中间留一点空格  -->
+                    <div class="col-md-1">
+
+                    </div>
+                    <!-- 右边表格部分 -->
+                    <div class="col-md-9" id="newDataContainer">
+                        <div id="newData">
+                            <table class="table table-bordered  table table-hover">
+                                <caption  style="text-align:center">预提毕业考生信息表</caption>
+                                <tbody>
+                                <tr>
+                                    <td>毕业预提ID</td>
+                                    <td>准考证号</td>
+                                    <td>考次编码</td>
+                                    <td>专业编码</td>
+                                    <td>学生类型编码</td>
+                                    <td>城市编码</td>
+                                    <td>区县编码</td>
+                                    <td>学校</td>
+                                </tr>
+                                <tr th:each="readyGra:${readyGraList}">
+                                    <td th:text="${readyGra.getId()}"></td>
+                                    <td th:text="${readyGra.getExamCardNum()}"></td>
+                                    <td th:text="${readyGra.getExamNum()}"></td>
+                                    <td th:text="${readyGra.getMajorNum()}"></td>
+                                    <td th:text="${readyGra.getSignUpType()}"></td>
+                                    <td th:text="${readyGra.getCityCode()}"></td>
+                                    <td th:text="${readyGra.getRegionCode()}"></td>
+                                    <td th:text="${readyGra.getSignUpSchool()}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="myspan">
+                                    <span>当前第 1 页</span>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-warning" >上一页</button>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-success">下一页</button>
+                                </div>
+                            </div>
+
+                            <br>
+                            <br>
+
+
+                            <!-- 查询结果页面数 -->
+                            <div class="row">
+                                <br>
+                                <br>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-8 ">
+                                    共查询到符合条件的考生：<span th:text="${count}" style="color: red;font-size: 18px"></span> 位
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    function readyQuery() {
+        $.ajax({
+            type: 'post',
+            url: '/graduation/proManagement/readyGraduation',
+            data:{},
+            success: function (data) {
+                var html = $(data).find("#newData");
+                $("#newDataContainer").html(html)
+
+            }
+        });
+    }
+</script>
+</body>
+</html>

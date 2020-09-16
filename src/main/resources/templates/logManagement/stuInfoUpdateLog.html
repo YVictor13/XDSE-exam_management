@@ -1,0 +1,196 @@
+<!-- 考籍业务操作日志 -->
+<!--考籍管理模块的操作都会有日志记录，考籍科工作人员可以根据条件查询操作日志-->
+<!--查询条件（操作人、操作时间）-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>考籍业务操作日志</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2 style="text-align: center;">考籍业务操作日志</h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <!-- 选择输入部分 -->
+                    <div class="col-md-4">
+                        <br>
+                        <br>
+                        <br>
+                        <form th:action="@{/logManagement/stuInfoUpdateLog}" method="post">
+                            <div class="row">
+                                <!--操作人姓名条件-->
+                                <div class="col-md-5 myselect_3">
+                                    <span>请输入操作人姓名：</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <!--操作人姓名输入框 -->
+                                    <input type="text" class="form-control  myinput_3 " placeholder="操作人姓名" name="name">
+                                </div>
+                                <br>
+                                <br>
+
+
+                                <!--修改时间条件-->
+                                <div class="col-md-5 myselect_3">
+                                    <span>请选择修改时间：</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <!-- 修改时间选择框 -->
+                                    <input type="date" class="form-control myinput_3 " placeholder="修改时间" name="date">
+                                </div>
+                                <br>
+                                <br>
+
+                            </div>
+
+
+                            <!-- 确认按钮  -->
+                            <div class="row">
+                                <br>
+                                <br>
+                                <br>
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-warning ydr" >重置</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="submit btn btn-success">查询</button>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>
+                            <div class="alert alert-warning alert-dismissible" role="alert" th:if="${status==0}">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                        style="width: 10px;height: 10px;top: -10px;right: -5px;"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <strong>警告：</strong>输入为空！！！
+                            </div>
+                            <div class="alert alert-warning alert-dismissible" role="alert" th:if="${status==1}">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                        style="width: 10px;height: 10px;top: -10px;right: -5px;"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <strong>警告：</strong>查无内容！！
+                            </div>
+                            <div class="alert alert-success alert-dismissible" role="alert" th:if="${status==2}">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                        style="width: 10px;height: 10px;top: -10px;right: -5px;"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <strong>成功：</strong>查询成功....
+                            </div>
+                        </form>
+
+
+                    </div>
+                    <!-- 中间留一点空格  -->
+                    <div class="col-md-1">
+
+                    </div>
+                    <!-- 右边表格部分 -->
+                    <div class="col-md-7">
+                        <table class="table table-bordered  table table-hover">
+                            <caption  style="text-align:center">考籍业务操作日志表</caption>
+                            <tbody>
+                            <tr>
+                                <td>日志ID</td>
+                                <td>操作人姓名</td>
+                                <td>修改内容</td>
+                                <td>修改时间</td>
+                            </tr>
+                            <tr th:each="infoOperateLog:${infoOperateLogList}" th:if="${infoOperateLogList.size()>0}">
+                                <td th:text="${infoOperateLog.getId()}"></td>
+                                <td th:text="${infoOperateLog.getOperatorName()}"></td>
+                                <td th:text="${infoOperateLog.getOperateContent()}"></td>
+                                <td th:text="${infoOperateLog.getOperateDate()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="myspan">
+                                <span>当前第 1 页</span>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-warning" >上一页</button>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-success">下一页</button>
+                            </div>
+                        </div>
+
+                        <br>
+                        <br>
+
+
+                        <!-- 查询结果页面数 -->
+                        <div class="row">
+                            <br>
+                            <br>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-8 ">
+                                <span>共查询到符合条件的日志：  <span th:text="${infoOperateLogList.size()}"></span>  条 </span>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    $(function(){
+        //清空form表单下的输入框
+        $('.ydr').on('click', function () {
+            $(':input','form')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+        });
+    })
+</script>
+
+</body>
+</html>

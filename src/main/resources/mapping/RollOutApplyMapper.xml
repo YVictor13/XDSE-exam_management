@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.RollOutApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.RollOutApply" >
+    <id column="apply_id" property="applyId" jdbcType="INTEGER" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="apply_code" property="applyCode" jdbcType="VARCHAR" />
+    <result column="roll_out_time" property="rollOutTime" jdbcType="VARCHAR" />
+    <result column="roll_out_reason" property="rollOutReason" jdbcType="VARCHAR" />
+    <result column="apply_state" property="applyState" jdbcType="INTEGER" />
+    <result column="check_person" property="checkPerson" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    apply_id, exam_card_num, apply_code, roll_out_time, roll_out_reason, apply_state, 
+    check_person, result, start_date, end_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from roll_out_apply
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from roll_out_apply
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.RollOutApply" >
+    insert into roll_out_apply (apply_id, exam_card_num, apply_code, 
+      roll_out_time, roll_out_reason, apply_state, 
+      check_person, result, start_date, 
+      end_date)
+    values (#{applyId,jdbcType=INTEGER}, #{examCardNum,jdbcType=VARCHAR}, #{applyCode,jdbcType=VARCHAR}, 
+      #{rollOutTime,jdbcType=VARCHAR}, #{rollOutReason,jdbcType=VARCHAR}, #{applyState,jdbcType=INTEGER}, 
+      #{checkPerson,jdbcType=VARCHAR}, #{result,jdbcType=INTEGER}, #{startDate,jdbcType=VARCHAR}, 
+      #{endDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.RollOutApply" >
+    insert into roll_out_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="applyId != null" >
+        apply_id,
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num,
+      </if>
+      <if test="applyCode != null" >
+        apply_code,
+      </if>
+      <if test="rollOutTime != null" >
+        roll_out_time,
+      </if>
+      <if test="rollOutReason != null" >
+        roll_out_reason,
+      </if>
+      <if test="applyState != null" >
+        apply_state,
+      </if>
+      <if test="checkPerson != null" >
+        check_person,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="applyId != null" >
+        #{applyId,jdbcType=INTEGER},
+      </if>
+      <if test="examCardNum != null" >
+        #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applyCode != null" >
+        #{applyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="rollOutTime != null" >
+        #{rollOutTime,jdbcType=VARCHAR},
+      </if>
+      <if test="rollOutReason != null" >
+        #{rollOutReason,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="checkPerson != null" >
+        #{checkPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.RollOutApply" >
+    update roll_out_apply
+    <set >
+      <if test="examCardNum != null" >
+        exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applyCode != null" >
+        apply_code = #{applyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="rollOutTime != null" >
+        roll_out_time = #{rollOutTime,jdbcType=VARCHAR},
+      </if>
+      <if test="rollOutReason != null" >
+        roll_out_reason = #{rollOutReason,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        apply_state = #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="checkPerson != null" >
+        check_person = #{checkPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.RollOutApply" >
+    update roll_out_apply
+    set exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      apply_code = #{applyCode,jdbcType=VARCHAR},
+      roll_out_time = #{rollOutTime,jdbcType=VARCHAR},
+      roll_out_reason = #{rollOutReason,jdbcType=VARCHAR},
+      apply_state = #{applyState,jdbcType=INTEGER},
+      check_person = #{checkPerson,jdbcType=VARCHAR},
+      result = #{result,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=VARCHAR},
+      end_date = #{endDate,jdbcType=VARCHAR}
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </update>
+
+  <resultMap id="RollInHelper" type="com.example.demo.model.helper.StuInfoInOutHelper">
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="city_code" property="rollOutCity" jdbcType="VARCHAR" />
+    <result column="apply_code" property="rollInCity" jdbcType="VARCHAR" />
+    <result column="end_date" property="endTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryAllStuRollOutByCityCode" resultMap="RollInHelper">
+    SELECT r.`exam_card_num`,st.`name`,si.`city_code`,r.`apply_code`,r.`end_date`
+FROM roll_out_apply r,student_info st,sign_up_info si
+WHERE st.`info_state`=2 AND si.`student_id` = st.`student_id` AND
+ r.`exam_card_num` = si.`exam_card_num` AND
+ r.`result`=1 AND r.`apply_code`=#{cityCode}
+    <if test="examNum !=''">
+      AND si.`exam_num`=#{examNum}
+    </if>
+  </select>
+
+  <select id="queryAllStuRollOut" resultMap="RollInHelper">
+    SELECT r.`exam_card_num`,st.`name`,si.`city_code`,r.`apply_code`,r.`end_date`
+    FROM roll_out_apply r,student_info st,sign_up_info si
+    WHERE st.`info_state`=2 AND si.`student_id` = st.`student_id` AND
+     r.`exam_card_num` = si.`exam_card_num` AND r.`result`= 1
+  </select>
+  <select id="queryAllStuRollOutByDate" resultMap="RollInHelper">
+
+    SELECT r.`exam_card_num`,st.`name`,si.`city_code`,r.`apply_code`,r.`end_date`
+    FROM roll_out_apply r,student_info st,sign_up_info si
+    WHERE st.`info_state`=2 AND si.`student_id` = st.`student_id` AND
+    r.`exam_card_num` = si.`exam_card_num` AND r.`result`=1 AND #{startDate} &lt;= end_date AND end_date &lt; #{endDate}
+  </select>
+
+  <select id="queryAllRollOutCity" resultType="java.lang.String">
+    select distinct apply_code
+    from roll_out_apply
+  </select>
+
+  <resultMap id="InfoRollOutHelper" type="com.example.demo.model.helper.InfoOutApplyHelper">
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="student_id" property="studentId" jdbcType="VARCHAR" />
+    <result column="exam_num" property="examNum" jdbcType="VARCHAR" />
+    <result column="major_num" property="majorNum" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="region_code" property="regionCode" jdbcType="VARCHAR" />
+    <result column="sign_up_school" property="signUpSchool" jdbcType="VARCHAR" />
+    <result column="sign_up_type" property="signUpType" jdbcType="INTEGER" />
+    <result column="sign_up_date" property="signUpDate" jdbcType="VARCHAR" />
+    <result column="info_state" property="infoState" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="nation" property="nation" jdbcType="INTEGER" />
+    <result column="political" property="political" jdbcType="INTEGER" />
+    <result column="job" property="job" jdbcType="INTEGER" />
+    <result column="degree" property="degree" jdbcType="INTEGER" />
+    <result column="health" property="health" jdbcType="INTEGER" />
+    <result column="census_place" property="censusPlace" jdbcType="INTEGER" />
+    <result column="student_type" property="studentType" jdbcType="INTEGER" />
+    <result column="id_card_type" property="idCardType" jdbcType="INTEGER" />
+    <result column="id_card_num" property="idCardNum" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="post_code" property="postCode" jdbcType="VARCHAR" />
+    <result column="work_place" property="workPlace" jdbcType="VARCHAR" />
+    <result column="photo_path" property="photoPath" jdbcType="VARCHAR" />
+    <result column="english_name" property="englishName" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryStuInfoByEcn" resultMap="InfoRollOutHelper">
+        SELECT *
+        FROM student_info st,sign_up_info si
+        WHERE si.`exam_card_num`=#{examCardNum} AND si.`student_id`=st.`student_id`
+  </select>
+
+  <resultMap id="RollOutApplyHelper" type="com.example.demo.model.helper.RollOutApplyHelper">
+    <result column="apply_id" property="applyId" jdbcType="INTEGER" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="apply_code" property="applyCode" jdbcType="VARCHAR" />
+    <result column="roll_out_time" property="rollOutTime" jdbcType="VARCHAR" />
+    <result column="roll_out_reason" property="rollOutReason" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="id_card_num" property="idCardNum" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="nation" property="nation" jdbcType="INTEGER" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryAllRollOutApplyByState" resultMap="RollOutApplyHelper">
+    SELECT r.`apply_id`,st.`name`,r.`exam_card_num`,st.`sex`,st.`id_card_num`,st.`nation`,r.`apply_code`,r.`roll_out_reason`,r.`end_date`
+    FROM student_info st,sign_up_info si,roll_out_apply r
+    WHERE r.apply_state=#{applyState} AND r.`exam_card_num`=si.`exam_card_num` AND si.`student_id` = st.`student_id`
+  </select>
+
+  <update id="updateRollOutState">
+    update roll_out_apply
+    set apply_state = #{applyState}
+    <if test="checker !=''">
+      ,check_person = #{checker}
+    </if>
+    <if test="endDate !=''">
+      ,end_date = #{endDate}
+    </if>
+    where apply_id = #{applyId}
+  </update>
+  <resultMap id="RollOutToRollOut" type="com.example.demo.model.RollInApply">
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="apply_code" property="applyCode" jdbcType="VARCHAR" />
+    <result column="roll_out_reason" property="rollOutReason" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryRollOutApplyById" resultMap="RollOutToRollOut">
+      SELECT exam_card_num,apply_code,roll_out_reason
+      FROM roll_out_apply
+      WHERE apply_id=#{applyId}
+  </select>
+
+  <select id="queryMajorByApplyId" resultType="java.lang.String">
+     SELECT major_num
+    FROM roll_out_apply r,sign_up_info si
+    WHERE r.`apply_id`=#{applyId} AND r.`exam_card_num` = si.`exam_card_num`
+  </select>
+
+  <update id="updateStuInfoStateByApplyId">
+    update student_info set info_state = #{infoState}
+    where student_id in (
+    select si.`student_id`
+    FROM roll_out_apply r,sign_up_info si
+    where r.`apply_id`=#{applyId} and r.`exam_card_num`=si.`exam_card_num`
+    )
+  </update>
+</mapper>

@@ -1,0 +1,160 @@
+<!--合格考籍资料入库 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>考籍转出审核入库</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <div class="container">
+                <div class="row">
+                    <!--  在此编辑内容     -->
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <h1 style="text-align: center;">考籍转出审核入库</h1>
+                        <table class="table">
+                            <tr>
+                                <td>序号</td>
+                                <td>姓名</td>
+                                <td>准考证号</td>
+                                <td>性别</td>
+                                <td>身份证号</td>
+                                <td>民族</td>
+                                <td>转出省份</td>
+                                <td>转出原因</td>
+                                <td>操作</td>
+                            </tr>
+                            <tr th:each="rollOutApply:${rollOutApplyList}">
+                                <td th:text="${rollOutApply.getApplyId()}"></td>
+                                <td th:text="${rollOutApply.getName()}"></td>
+                                <td th:text="${rollOutApply.getExamCardNum()}"></td>
+                                <td class="cityCode" th:text="${rollOutApply.getSex()}"></td>
+                                <td th:text="${rollOutApply.getIdCardNum()}"></td>
+                                <td th:text="${rollOutApply.getNation()}"></td>
+                                <td th:text="${rollOutApply.getApplyCode()}"></td>
+                                <td th:text="${rollOutApply.getRollOutReason()}"></td>
+                                <td>
+                                    <!-- 勾选框 -->
+                                    <div>
+                                        <label>
+                                            <input type="checkbox" class="mycheckbox" onclick="selectOne(this)">
+                                        </label>
+                                        <input class="mydisplay" name="id" th:value="${rollOutApply.getApplyId()}" style="display: none">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="row">
+                            <div class="myspan">
+                                <span style="position: relative;left: 350px;">当前第 1 页</span>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-warning" style="position: relative;left: 20px;">上一页</button>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-success" style="position: relative;left: 55px;">下一页</button>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <!--按钮部分-->
+                        <div>
+                            <button type="button" class="btn btn-warning" style="position: relative;left: 150px;" onclick="refuseApply()">驳回申请</button>
+                            <button type="button" class="btn btn-success" style="position: relative;left: 450px;" onclick="goNextCheck()">通过申请</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    function selectOne(event) {
+        // console.log(event.checked);
+        const thisChecked = event.checked;
+        console.log(thisChecked)
+        var checkboxes = $(".mycheckbox");
+        for (var i=0;i<checkboxes.length;i++){
+            if (checkboxes[i].checked){
+                checkboxes[i].checked=false;
+            }
+        }
+        if (thisChecked){
+            event.checked=true;
+        }else {
+            event.checked=false;
+        }
+
+    }
+    function goNextCheck() {
+        var checkboxes = $(".mycheckbox");
+        var id = 0;
+        for (var i=0;i<checkboxes.length;i++){
+            if (checkboxes[i].checked){
+                var input = checkboxes[i].parentNode.parentNode.children;
+                id = input[1].value;
+            }
+        }
+        if (id!==0){
+            $.ajax({
+                type: 'post',
+                url: '/stuInfoInOut/infoOutAction',
+                data:{applyId:id},
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+
+
+    }
+    function refuseApply() {
+        var checkboxes = $(".mycheckbox");
+        var id = 0;
+        for (var i=0;i<checkboxes.length;i++){
+            if (checkboxes[i].checked){
+                var input = checkboxes[i].parentNode.parentNode.children;
+                id = input[1].value;
+            }
+        }
+        if (id!==0){
+            $.ajax({
+                type: 'post',
+                url: '/stuInfoInOut/infoOutCheckRefuse',
+                data:{applyId:id},
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+    }
+</script>
+</body>
+
+</html>

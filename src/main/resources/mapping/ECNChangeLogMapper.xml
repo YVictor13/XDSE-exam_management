@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.ECNChangeLogMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.ECNChangeLog" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="old_ECN" property="oldEcn" jdbcType="VARCHAR" />
+    <result column="new_ECN" property="newEcn" jdbcType="VARCHAR" />
+    <result column="change_state" property="changeState" jdbcType="INTEGER" />
+    <result column="city_opinion" property="cityOpinion" jdbcType="VARCHAR" />
+    <result column="root_opinion" property="rootOpinion" jdbcType="VARCHAR" />
+    <result column="handle_time" property="handleTime" jdbcType="VARCHAR" />
+    <result column="result_state" property="resultState" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, old_ECN, new_ECN, change_state, city_opinion, root_opinion, handle_time, result_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ecn_change_log
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ecn_change_log
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.ECNChangeLog" >
+    insert into ecn_change_log (id, old_ECN, new_ECN, 
+      change_state, city_opinion, root_opinion, 
+      handle_time, result_state)
+    values (#{id,jdbcType=VARCHAR}, #{oldEcn,jdbcType=VARCHAR}, #{newEcn,jdbcType=VARCHAR}, 
+      #{changeState,jdbcType=INTEGER}, #{cityOpinion,jdbcType=VARCHAR}, #{rootOpinion,jdbcType=VARCHAR}, 
+      #{handleTime,jdbcType=VARCHAR}, #{resultState,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.ECNChangeLog" >
+    insert into ecn_change_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="oldEcn != null" >
+        old_ECN,
+      </if>
+      <if test="newEcn != null" >
+        new_ECN,
+      </if>
+      <if test="changeState != null" >
+        change_state,
+      </if>
+      <if test="cityOpinion != null" >
+        city_opinion,
+      </if>
+      <if test="rootOpinion != null" >
+        root_opinion,
+      </if>
+      <if test="handleTime != null" >
+        handle_time,
+      </if>
+      <if test="resultState != null" >
+        result_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="oldEcn != null" >
+        #{oldEcn,jdbcType=VARCHAR},
+      </if>
+      <if test="newEcn != null" >
+        #{newEcn,jdbcType=VARCHAR},
+      </if>
+      <if test="changeState != null" >
+        #{changeState,jdbcType=INTEGER},
+      </if>
+      <if test="cityOpinion != null" >
+        #{cityOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="rootOpinion != null" >
+        #{rootOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null" >
+        #{handleTime,jdbcType=VARCHAR},
+      </if>
+      <if test="resultState != null" >
+        #{resultState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.ECNChangeLog" >
+    update ecn_change_log
+    <set >
+      <if test="oldEcn != null" >
+        old_ECN = #{oldEcn,jdbcType=VARCHAR},
+      </if>
+      <if test="newEcn != null" >
+        new_ECN = #{newEcn,jdbcType=VARCHAR},
+      </if>
+      <if test="changeState != null" >
+        change_state = #{changeState,jdbcType=INTEGER},
+      </if>
+      <if test="cityOpinion != null" >
+        city_opinion = #{cityOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="rootOpinion != null" >
+        root_opinion = #{rootOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null" >
+        handle_time = #{handleTime,jdbcType=VARCHAR},
+      </if>
+      <if test="resultState != null" >
+        result_state = #{resultState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.ECNChangeLog" >
+    update ecn_change_log
+    set old_ECN = #{oldEcn,jdbcType=VARCHAR},
+      new_ECN = #{newEcn,jdbcType=VARCHAR},
+      change_state = #{changeState,jdbcType=INTEGER},
+      city_opinion = #{cityOpinion,jdbcType=VARCHAR},
+      root_opinion = #{rootOpinion,jdbcType=VARCHAR},
+      handle_time = #{handleTime,jdbcType=VARCHAR},
+      result_state = #{resultState,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

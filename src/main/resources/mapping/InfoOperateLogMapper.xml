@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.InfoOperateLogMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.InfoOperateLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+    <result column="operate_content" property="operateContent" jdbcType="VARCHAR" />
+    <result column="operate_date" property="operateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, operator_name, operate_content, operate_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from info_operate_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from info_operate_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.InfoOperateLog" >
+    insert into info_operate_log (id, operator_name, operate_content, 
+      operate_date)
+    values (#{id,jdbcType=INTEGER}, #{operatorName,jdbcType=VARCHAR}, #{operateContent,jdbcType=VARCHAR}, 
+      #{operateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.InfoOperateLog" >
+    insert into info_operate_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operatorName != null" >
+        operator_name,
+      </if>
+      <if test="operateContent != null" >
+        operate_content,
+      </if>
+      <if test="operateDate != null" >
+        operate_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateContent != null" >
+        #{operateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operateDate != null" >
+        #{operateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.InfoOperateLog" >
+    update info_operate_log
+    <set >
+      <if test="operatorName != null" >
+        operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateContent != null" >
+        operate_content = #{operateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operateDate != null" >
+        operate_date = #{operateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.InfoOperateLog" >
+    update info_operate_log
+    set operator_name = #{operatorName,jdbcType=VARCHAR},
+      operate_content = #{operateContent,jdbcType=VARCHAR},
+      operate_date = #{operateDate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

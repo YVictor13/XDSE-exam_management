@@ -1,0 +1,64 @@
+/* 用于存放自定义的css */
+
+/* 调整 "考生成绩导入"中'当前第1页'的span标签的相对位置 */
+.myspan{
+    position: relative;
+    left: 300px;
+}
+
+
+/* 调整 "考生成绩导入"中'选择考次'的select标签的长宽高 */
+.myselect{
+    width:90px;
+    height:30px;
+}
+
+/* 调整 "考籍信息"中'选择考生类型'的select标签的长宽高 */
+.myselect_1{
+    width:150px;
+    height:30px;
+}
+
+/* 调整 "考籍信息"中'选择查询条件'的select标签的长宽高*/
+.myselect_2{
+    width:220px;
+    height:30px;
+}
+
+/* 调整 "统计表"中'选择查询条件'的select标签的长宽高*/
+.myselect_3{
+    width:180px;
+    height:30px;
+}
+
+/* 调整 "时间管理"中'时间输入框'的input标签的长宽高 */
+.myinput{
+    width:100px;
+    height:30px;
+}
+
+/* 调整 "非关键信息修改"中'修改输入框'的input标签的长宽高 */
+.myinput_1{
+    width:150px !important;
+    height:30px !important;
+}
+
+/* 调整 "关键信息修改"中'修改输入框'的input标签的长宽高 */
+.myinput_2{
+    width:150px !important;
+    height:30px !important;
+}
+
+/* 调整 "日志管理"中'输出框'的input标签的长宽高*/
+.myinput_3{
+    width:180px;
+    height:30px;
+}
+
+
+/* 调整 "关键信息修改"中'展示姓名/性别'的label标签的长宽高 */
+.mylable_1{
+    width:80px !important;
+    height:30px !important;
+}
+

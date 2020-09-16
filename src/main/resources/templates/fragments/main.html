@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+</head>
+<body>
+<div th:fragment="main" style="margin-top: 20px" >
+    <!--标题-->
+    <div class="title" style="position:relative;left: 320px;top: -40px;"><h1>欢   迎   来   到   考   生   考   籍   管   理   系   统</h1></div>
+    <br><br>
+    <div class="search">
+        <div class="input-group">
+            <!--搜索框与搜索框样式处理-->
+            <input type="text" class=" form-control input-lg " style="">
+            <span class="input-group-addon btn btn-primary" >搜索</span>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+
+        <span class=" col-md-2 card1">
+        <img th:src="@{imgs/mod1.png}" style="position: relative;left: 70px;width: 20px;height: 20px">
+        <a class="btn btn-primary "  style=" position: relative;left: 70px;color: white;    width: 84px;height: 35px;text-decoration:none" th:href="@{/infoModify}">修改申请
+            <span class="badge info_num" style="position: relative;left: -2px;top: 1px;">3</span>
+        </a>
+        </span>
+
+        <span class=" col-md-2 card1">
+        <img th:src="@{imgs/exa.png}" style="position: relative;left: 70px;width: 20px;height: 20px;text-decoration:none">
+        <span class="btn btn-primary"  style="position: relative;left: 70px;background-color: plum;color: white;    width: 84px;height: 35px">免考申请
+            <span class="badge info_num" style="position: relative;left: -2px;top: 1px;">3</span>
+        </span>
+        </span>
+
+        <span class=" col-md-3 card1">
+            <img th:src="@{imgs/cour.png}" style="position: relative;left: 70px;width: 20px;height: 20px ;text-decoration:none">
+            <span class="btn btn-primary"  style="position: relative;left: 70px; background-color: #80bdff;color: white;    width: 108px;height: 35px">课程顶替申请&nbsp;<span class="badge info_num" style="position: relative;left: -2px;top: 1px;">3</span></span>
+         </span>
+
+        <span class=" col-md-2 card1">
+            <img th:src="@{imgs/bi.png}" style="width: 20px;height: 20px;text-decoration:none">
+            <span class="btn btn-primary"  style="background-color: greenyellow;color: white;    width: 84px;height: 35px">毕业申请&nbsp;<span class="badge info_num" style="position: relative;left: -2px;top: 1px;">3</span></span>
+        </span>
+
+        <span class=" col-md-2 card1">
+            <img th:src="@{imgs/xue.png}" style="width: 20px;height: 20px;text-decoration:none">
+            <span class="btn btn-primary"  style="background-color: tomato;color: white; width: 84px;height: 35px">考籍申请&nbsp;<span class="badge info_num" style="background: #ff1908;position: relative;left: -2px;top: 1px;">3</span></span>
+        </span>
+    </div>
+
+</div>
+
+
+
+
+</div >
+
+<div th:fragment="inform" style="margin-top: 70px">
+<h2 >通知栏</h2>
+        <textarea placeholder="最新通知发布..." style="resize: none;width: 1200px;height: 350px" ></textarea>
+    <br>
+    <button class="btn btn-primary publi">发布</button>
+</div>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!-- 考生三类免考申请  -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>考生三类免考申请</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+    <style>
+        .select{
+            position: relative;
+            left: 16px;
+            bottom: -50px;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button{
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>考生三类免考申请</center></h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+
+                    <div class="row select">
+                        <div class="col-md-10 myselect_1">
+                            <span>请选择证件类型：</span>
+                        </div>
+
+                        <div class="col-md-4 ">
+                            <select class="form-control myselect_2" id="select1">
+                                <option value="1">在校学生</option>
+                                <option value="2">普通高校退学生</option>
+                                <option value="3">肄业生</option>
+                                <option value="4">教育部承认的非学历证书</option>
+                            </select>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                    <!-- 选择输入部分 -->
+                    <div class="col-md-4">
+                        <!-- 输入框  -->
+                        <div class="row">
+                                <div class="col-md-10 myselect_1">
+                                    <span>请输入证件编号：</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control myselect_2" placeholder="Text input"
+                                            oninput="if(value.length>16)value=value.slice(0,16);if(value<0)value=0">
+                                </div>
+
+                        </div>
+`                       <div class="row">
+                        <div class="col-md-10 myselect_1">
+                            <span>请选择替换课程：</span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <select class="form-control myselect_2" id="selected">
+                                <option th:each="course:${courseList}" th:value="${course.getCourseCode()}" th:text="${course.getCourseName()}"></option>
+                            </select>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                        <!-- 确认按钮  -->
+                        <div class="row">
+                            <br>
+                            <br>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-warning ydr" onclick="rebuild()">重置</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-success" onclick="sureApply()">确定申请</button>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    $(function(){
+        //清空form表单下的输入框
+        $('.ydr').on('click', function () {
+            $(':input','form')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+        });
+    })
+
+    function sureApply() {
+        var type = $("#select1 option:selected")[0].value;
+        var cardNum = $(".myselect_2")[1].value;
+        var courseCode = $("#selected option:selected")[0].value;
+        $.ajax({
+            type: 'post',
+            url: '/freeExam/threeClass/apply',
+            data:{type:type,cardNum:cardNum,courseCode:courseCode},
+            success: function (data) {
+            }
+        });
+    }
+    function rebuild() {
+        $("#select1").val("");
+        $(".myselect_2")[1].value = "";
+        $("#selected").val("")
+    }
+</script>
+
+</body>
+</html>

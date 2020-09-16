@@ -1,0 +1,224 @@
+<!-- 二类免考审核  -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>二类免考审核</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>二类免考审核</center></h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <!-- 原准考证照片部分 -->
+                    <div class="col-md-4">
+                        <br>
+                        <div class="row">
+                            <div class="col-md-10 myselect_1" >
+                                <span>原准考证照片：</span>
+                            </div>
+
+                            <div class="col-md-6" style="width: 140px;height: 200px;background-color: white">
+                                <!--原准考证照片路径-->
+                                <img src="" alt="">
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+
+                        </div>
+                        <!-- 现准考证照片部分  -->
+                        <div class="row">
+
+                            <div class="col-md-10 myselect_1" >
+                                <span>现准考证照片：</span>
+                            </div>
+                            <div class="col-md-6" style="width: 140px;height: 200px;background-color: white">
+                                <!--现准考证照片路径-->
+                                <img src="" alt="">
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- 中间留一点空格  -->
+                    <div class="col-md-1">
+
+                    </div>
+                    <!-- 右边表格部分 -->
+                    <div class="col-md-7">
+                        <table class="table table-bordered  table table-hover">
+                            <caption  style="text-align:center">考生申请免考课程</caption>
+                            <tbody>
+                            <tr>
+                                <td>毕业证号</td>
+                                <td>准考证号</td>
+                                <td>课程ID</td>
+                                <td>课程</td>
+                                <td>成绩</td>
+                                <td>操作</td>
+                            </tr>
+                            <tr th:each="twoapply:${twoClassApplyList}">
+                                <td th:text="${twoapply.getGraduateId()}"></td>
+                                <td th:text="${twoapply.getExamCardNum()}"></td>
+                                <td th:text="${twoapply.getCourseCode()}"></td>
+                                <td th:text="${twoapply.getCourseName()}"></td>
+                                <td th:text="${twoapply.getGrade()}"></td>
+                                <td>
+                                    <!-- 勾选框 -->
+                                    <div>
+                                        <label>
+                                            <input type="checkbox" class="mycheckbox" onclick="selectOne(this)">
+                                        </label>
+                                        <input name="id" th:value="${twoapply.getId()}" style="display: none">
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="myspan">
+                                <span>当前第 1 页</span>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-warning" >上一页</button>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-success">下一页</button>
+                            </div>
+                        </div>
+
+                        <br>
+                        <br>
+
+
+                        <!-- 审核通过与不通过按钮-->
+                        <div class="row">
+                            <br>
+                            <br>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-warning" style="position: relative;left: -63px;" onclick="refuseApply()">驳回申请</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-success" onclick="goNextCheck()">通过审核</button>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    function selectOne(event) {
+        // console.log(event.checked);
+        const thisChecked = event.checked;
+        console.log(thisChecked)
+        var checkboxes = $(".mycheckbox");
+        for (var i=0;i<checkboxes.length;i++){
+            if (checkboxes[i].checked){
+                checkboxes[i].checked=false;
+            }
+        }
+        if (thisChecked){
+            event.checked=true;
+        }else {
+            event.checked=false;
+        }
+
+    }
+    function goNextCheck() {
+        var checkboxes = $(".mycheckbox");
+        var id = 0;
+        for (var i=0;i<checkboxes.length;i++){
+            if (checkboxes[i].checked){
+                var input = checkboxes[i].parentNode.parentNode.children;
+                id = input[1].value;
+            }
+        }
+        if (id!==0){
+            $.ajax({
+                type: 'post',
+                url: '/freeExam/twoClass/check',
+                data:{ID:id},
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+
+    }
+    function refuseApply() {
+        var checkboxes = $(".mycheckbox");
+        var id = 0;
+        for (var i=0;i<checkboxes.length;i++){
+            if (checkboxes[i].checked){
+                var input = checkboxes[i].parentNode.parentNode.children;
+                id = input[1].value;
+            }
+        }
+        if (id!==0){
+            $.ajax({
+                type: 'post',
+                url: '/freeExam/twoClass/refuse',
+                data:{ID:id},
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+
+    }
+
+</script>
+</body>
+</html>

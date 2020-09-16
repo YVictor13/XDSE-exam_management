@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.TwoClassApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.TwoClassApply" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="graduate_id" property="graduateId" jdbcType="VARCHAR" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="old_course_code" property="oldCourseCode" jdbcType="VARCHAR" />
+    <result column="new_course_code" property="newCourseCode" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="region_code" property="regionCode" jdbcType="VARCHAR" />
+    <result column="apply_state" property="applyState" jdbcType="INTEGER" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="TwoClassDetailInfo" type="com.example.demo.model.helper.TwoClassApplyHelper">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="graduate_id" property="graduateId" jdbcType="VARCHAR" />
+    <result column="exam_card_num" property="examCardNum" jdbcType="VARCHAR" />
+    <result column="course_code" property="courseCode" jdbcType="VARCHAR" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="region_code" property="regionCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="CourseNameAndScore" type="com.example.demo.dto.CourseNameAndGrade">
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, graduate_id, exam_card_num, old_course_code, new_course_code, city_code, region_code, 
+    apply_state, result, start_date, end_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from two_class_apply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+<!--  查找毕业课程详细信息-->
+  <select id="queryTwoClassInfo" resultMap="TwoClassDetailInfo">
+     SELECT graduate_id,gc.exam_card_num,gd.course_code,c.course_name,gd.grade,gd.valid,s.city_code,s.region_code
+ FROM graduate_cert gc,grade gd,course c,sign_up_info s
+ WHERE gc.exam_card_num = gd.exam_card_num AND gc.exam_card_num=s.exam_card_num AND gd.course_code=c.course_code AND gc.exam_card_num IN(
+
+	SELECT exam_card_num
+	FROM sign_up_info
+	WHERE student_id=#{studentId}
+ )
+  </select>
+
+  <select id="queryTwoClassInfoByGid" resultMap="TwoClassDetailInfo">
+    SELECT graduate_id,gc.exam_card_num,gd.course_code,c.course_name,gd.grade,gd.valid,s.city_code,s.region_code
+     FROM graduate_cert gc,grade gd,course c,sign_up_info s
+     WHERE gc.exam_card_num = gd.exam_card_num AND gc.exam_card_num=s.exam_card_num AND gd.course_code=c.course_code AND gc.exam_card_num IN(
+
+        SELECT exam_card_num
+        FROM graduate_cert
+        WHERE graduate_id=#{Gid}
+     )
+  </select>
+<select id="queryTwoClassCheck" resultMap="BaseResultMap">
+  select *
+  from two_class_apply
+  where apply_state = #{applyState}
+</select>
+<!--  查找课程名和成绩-->
+  <select id="queryNameAndGrade" resultMap="CourseNameAndScore">
+    SELECT grade,c.course_name
+    FROM grade g,course c
+    WHERE (exam_card_num,g.course_code) IN (
+	    SELECT gc.exam_card_num,old_course_code
+        FROM two_class_apply t,graduate_cert gc
+        WHERE apply_state=1 AND t.graduate_id = #{graduateId} AND t.old_course_code=#{courseId} AND t.graduate_id=gc.`graduate_id`
+    )AND g.course_code=c.course_code
+
+
+  </select>
+
+<!--  查找姓名-->
+  <select id="queryStudentName" resultType="java.lang.String">
+    SELECT NAME
+    FROM student_info st
+    WHERE st.student_id IN(
+        SELECT student_id
+        FROM sign_up_info
+        WHERE exam_card_num = #{examCardNum}
+    )
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from two_class_apply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.TwoClassApply" >
+    insert into two_class_apply (id, graduate_id, exam_card_num, 
+      old_course_code, new_course_code, city_code, 
+      region_code, apply_state, result, 
+      start_date, end_date)
+    values (#{id,jdbcType=INTEGER}, #{graduateId,jdbcType=VARCHAR}, #{examCardNum,jdbcType=VARCHAR}, 
+      #{oldCourseCode,jdbcType=VARCHAR}, #{newCourseCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{regionCode,jdbcType=VARCHAR}, #{applyState,jdbcType=INTEGER}, #{result,jdbcType=INTEGER}, 
+      #{startDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.TwoClassApply" >
+    insert into two_class_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="graduateId != null" >
+        graduate_id,
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num,
+      </if>
+      <if test="oldCourseCode != null" >
+        old_course_code,
+      </if>
+      <if test="newCourseCode != null" >
+        new_course_code,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="regionCode != null" >
+        region_code,
+      </if>
+      <if test="applyState != null" >
+        apply_state,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="graduateId != null" >
+        #{graduateId,jdbcType=VARCHAR},
+      </if>
+      <if test="examCardNum != null" >
+        #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="oldCourseCode != null" >
+        #{oldCourseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="newCourseCode != null" >
+        #{newCourseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionCode != null" >
+        #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.TwoClassApply" >
+    update two_class_apply
+    <set >
+      <if test="graduateId != null" >
+        graduate_id = #{graduateId,jdbcType=VARCHAR},
+      </if>
+      <if test="examCardNum != null" >
+        exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="oldCourseCode != null" >
+        old_course_code = #{oldCourseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="newCourseCode != null" >
+        new_course_code = #{newCourseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionCode != null" >
+        region_code = #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applyState != null" >
+        apply_state = #{applyState,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.TwoClassApply" >
+    update two_class_apply
+    set graduate_id = #{graduateId,jdbcType=VARCHAR},
+      exam_card_num = #{examCardNum,jdbcType=VARCHAR},
+      old_course_code = #{oldCourseCode,jdbcType=VARCHAR},
+      new_course_code = #{newCourseCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      region_code = #{regionCode,jdbcType=VARCHAR},
+      apply_state = #{applyState,jdbcType=INTEGER},
+      result = #{result,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=VARCHAR},
+      end_date = #{endDate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateApplyState" parameterType="java.lang.Integer">
+    update two_class_apply
+    set apply_state=#{stateCode}
+    where id = #{id}
+  </update>
+
+<!--  最终状态更新-->
+  <update id="endTwoApply">
+    update two_class_apply
+    set apply_state=#{stateCode},
+        result = #{resCode},
+        end_date = #{endDate}
+    where id = #{id}
+  </update>
+</mapper>

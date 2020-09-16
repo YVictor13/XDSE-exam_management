@@ -1,0 +1,157 @@
+<!-- 毕业资格查询 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>毕业资格查询</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2 style="text-align: center">毕业资格查询</h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <!-- 前面留一点空格  -->
+                    <div class="col-md-1">
+
+                    </div>
+                    <!-- 选择输入部分 -->
+                    <form th:action="@{/graduation/studentNeed/graduationQualificationInquiry}" method="post">
+                    <div class="col-md-10">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12 myselect_2">
+                                <span>请选择需毕业的专业：</span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <select class="form-control myselect_2" name="majorNum">
+                                    <option>10001</option>
+                                    <option>10002</option>
+                                    <option>10003</option>
+                                    <option>10004</option>
+                                    <option>10005</option>
+                                </select>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                        <!-- 输入框  -->
+                            <div class="row">
+                                <form action="">
+                                    <div class="col-md-12 myselect_2">
+                                        <span>请输入考生准考证号：</span> <!-- 能获取到当前登录考生的ID也不用手动输入 -->
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control myselect_2" placeholder="请输入正确的准考证号...."
+                                               name="examCardNum">
+                                    </div>
+                                </form>
+
+
+                            </div>
+
+
+                            <!-- 确认按钮  -->
+                            <div class="row">
+                                <br>
+                                <br>
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-warning ydr">重置</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="submit btn btn-success">提交申请</button>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>
+                        <div class="alert alert-warning alert-dismissible" role="alert" th:if="${status==-1}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span></button>
+                            <strong>警告：</strong>申请人不存在
+                        </div>
+
+                        <div class="alert alert-warning alert-dismissible" role="alert" th:if="${status==0}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span></button>
+                            <strong>警告：</strong>申请专业与本人所修专业不符合，请核实再申请
+                        </div>
+                        <div class="alert alert-warning alert-dismissible" role="alert" th:if="${status==1}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span></button>
+                            <strong>警告：</strong>申请考生还有课程没有通过考核
+                        </div>
+                        <div class="alert alert-warning alert-dismissible" role="alert" th:if="${status==2}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span></button>
+                            <strong>警告：</strong>已经申请毕业，请等候审核
+                        </div>
+                        <div class="alert alert-success alert-dismissible" role="alert" th:if="${status==3}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span></button>
+                            <strong>成功：</strong>查询成功，此考生具备毕业要求,请尽快提交申请....
+                        </div>
+                    </div>
+                    </form>
+
+                    <!-- 中间留一点空格  -->
+                    <div class="col-md-1">
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+
+<!-- JavaScript部分 -->
+<script>
+    $(function () {
+        //清空form表单下的输入框
+        $('.ydr').on('click', function () {
+            $(':input', 'form')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+        });
+    })
+</script>
+</body>
+</html>

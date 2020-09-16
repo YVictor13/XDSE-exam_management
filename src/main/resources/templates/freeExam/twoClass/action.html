@@ -1,0 +1,146 @@
+<!--二类免考确认入库 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>二类免考确认入库</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <div class="container">
+                <div class="row">
+                    <!--  在此编辑内容     -->
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <h1 style="text-align: center;">二类免考确认入库</h1>
+                        <table class="table">
+                            <tr>
+                                <td>序号</td>
+                                <td>姓名</td>
+                                <td>原毕业证号</td>
+                                <td>现准考证号</td>
+                                <td>课程编码</td>
+                                <td>操作</td>
+                            </tr>
+                            <tr th:each="twoClassApply:${twoClassApplyList}">
+                                <td th:text="${twoClassApply.getId()}"></td>
+                                <td th:text="${twoClassApply.getName()}"></td>
+                                <td th:text="${twoClassApply.getGraduateId()}"></td>
+                                <td th:text="${twoClassApply.getExamCardNum()}"></td>
+                                <td th:text="${twoClassApply.getCourseCode()}"></td>
+                                <td>
+                                    <!-- 勾选框 -->
+                                    <div>
+                                        <label>
+                                            <input type="checkbox" class="mycheckbox" onclick="selectOne(this)">
+                                        </label>
+                                        <input class="mydisplay" name="id" th:value="${twoClassApply.getId()}" style="display: none">
+                                        <input class="mydisplay" name="graduateId" th:value="${twoClassApply.getGraduateId()}" style="display: none">
+                                        <input class="mydisplay" name="courseCode" th:value="${twoClassApply.getCourseCode()}" style="display: none">
+                                        <input class="mydisplay" name="examCardNum" th:value="${twoClassApply.getExamCardNum()}" style="display: none">
+                                    </div></td>
+                            </tr>
+                        </table>
+                        <!--按钮部分-->
+                        <div>
+                            <button type="button" class="btn btn-warning" style="position: relative;left: 150px;" onclick="refuseApply()">取消</button>
+                            <button type="button" class="btn btn-success" style="position: relative;left: 450px;" onclick="pullInRes()">确认入库</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    function pullInRes() {
+        var checkboxes = $(".mycheckbox");
+        var id = 0;
+        var graduateId = "";
+        var courseCode = "";
+        var examCardNum = "";
+        for (var i=0;i<checkboxes.length;i++){
+            if (checkboxes[i].checked){
+                var input = checkboxes[i].parentNode.parentNode.children;
+                id = input[1].value;
+                graduateId = input[2].value;
+                courseCode = input[3].value;
+                examCardNum = input[4].value;
+            }
+        }
+        if (id!==0){
+            $.ajax({
+                type: 'post',
+                url: '/freeExam/twoClass/pullIn',
+                data:{ID:id,graduateId:graduateId,courseCode:courseCode,examCardNum:examCardNum},
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+
+    }
+
+    function refuseApply() {
+        var checkboxes = $(".mycheckbox");
+        var id = 0;
+        for (var i=0;i<checkboxes.length;i++){
+            if (checkboxes[i].checked){
+                var input = checkboxes[i].parentNode.parentNode.children;
+                id = input[1].value;
+            }
+        }
+        if (id!==0){
+            $.ajax({
+                type: 'post',
+                url: '/freeExam/twoClass/endRefuse',
+                data:{ID:id},
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+
+    }
+
+    function selectOne(event) {
+        // console.log(event.checked);
+        const thisChecked = event.checked;
+        console.log(thisChecked)
+        var checkboxes = $(".mycheckbox");
+        for (var i=0;i<checkboxes.length;i++){
+            if (checkboxes[i].checked){
+                checkboxes[i].checked=false;
+            }
+        }
+        if (thisChecked){
+            event.checked=true;
+        }else {
+            event.checked=false;
+        }
+
+    }
+</script>
+</body>
+
+</html>

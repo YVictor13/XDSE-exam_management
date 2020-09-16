@@ -1,0 +1,189 @@
+<!--成绩合格证明页面 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>成绩合格证明页面</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2 style="text-align: center">成绩合格证明</h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <!-- 选择输入部分 -->
+                    <div class="col-md-2">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+
+                        <!-- 输入框  -->
+                        <form th:action="@{/graduation/proof/gradesQualified}" method="post">
+                            <div class="row">
+                                <div class="col-md-14 myselect_1">
+                                    <span>  请输入考生准考证号：</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control myselect_2" placeholder="请输入正确的准考证号..." name="ExamCardNum">
+                                </div>
+                            </div>
+
+                            <!-- 确认按钮  -->
+                            <div class="row">
+                                <br>
+                                <br>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-warning ydr" >重置</button>
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="submit btn btn-success">查询</button>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- 中间留一点空格  -->
+                    <div class="col-md-2">
+
+                    </div>
+                    <!-- 右边成绩证明部分 -->
+                    <div class="col-md-8" th:if="${zhEnGradesProof==null}">
+                        <h1 style="text-align: center;color: #ff1908">成&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;绩&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;证&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</h1>
+                        <div style="font-size: larger;color: white;position: relative;left: 50px;letter-spacing: 3px;">
+                            <div>
+                                <br>
+                                学生 <span>xxx</span>  性别 <span >xx</span>，准考证号 <span>xxxxxxx</span>，身份证号 <span>xxxxxx</span> 家住 <span>xxx</span> 市/州，
+                            </div>
+                            <div>
+                                <br>
+                                <span>xxxx</span>区/县，  于 <span>xxx</span> 年 <span >xxx</span> 月 <span>xxx</span>  日, 在 <span>xxx</span> 学校毕业，完成本校<span>xxxxx</span>
+                            </div>
+                            <div>
+                                <br>
+                                专业规定的课程考试，且成绩有效，本证明系成绩 <span>xxxx</span>类型证明，特此证明！
+                            </div>
+                            <div>
+                                <br>
+                                校名：<span>xxxxx</span>
+                            </div>
+                            <div>
+                                <br>
+                                成绩单编号：<span>xxxxx</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>xxx</span> 年 <span >xxx</span> 月 <span>xxx</span>  日
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+
+                    <div class="col-md-8" th:if="${zhEnGradesProof!=null}">
+                        <h1 style="text-align: center;color: #ff1908">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;绩&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;证&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</h1>
+                        <div id="certificate" style="font-size: larger;color: white;position: relative;left: 50px;letter-spacing: 3px;">
+                            <div id="first_line">
+                                <br>
+                                学生 <span id="name" th:text="${zhEnGradesProof.getName()}"></span>性别<span id="sex" th:text="${zhEnGradesProof.getSex()}"></span>，准考证号 <span id="teatcanrnumber" th:text="${zhEnGradesProof.getExamCardNum()}"></span>，身份证号 <span id="IDnum" th:text="${zhEnGradesProof.getStudentId()}"></span> 家住 <span id="city" th:text="${zhEnGradesProof.getCity()}"></span> 市/州，
+                            </div>
+                            <div id="second_line">
+                                <br>
+                                <span id="county" th:text="${zhEnGradesProof.getRegion()}">xxxx</span>区/县，  于 <span id="graduationyear" th:text="${zhEnGradesProof.getgDate()}">, 在 </span><span id="school" th:text="${zhEnGradesProof.getSchool()}">xxx</span> 学校毕业，完成本校<span id="profession" th:text="${zhEnGradesProof.getMajor()}">xxxxx</span>
+                            </div>
+                            <div id="third_line">
+                                <br>
+                                专业规定的课程考试，且成绩有效，本证明系成绩 <span id="certify_type" th:text="${zhEnGradesProof.getGradeType()}">xxxx</span>类型证明，特此证明！
+                            </div>
+                            <div id="schoolname">
+                                <br>
+                                校名：<span id="schoolname1" th:text="${zhEnGradesProof.getSchool()}">xxxxx</span>
+                            </div>
+                            <div id="number&date">
+                                <br>
+                                成绩单编号：<span id="gradeschartnumber" th:text="${zhEnGradesProof.getGradeId()}">xxxxx</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="year" th:text="${zhEnGradesProof.getDate()}">xxx</span>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <!--按钮部分-->
+                        <div>
+                            <a th:href="@{/graduation/proof/SingleGrade/getWord}">
+                                <button type="button" class="btn btn-success" style="position: relative;left: 505px;">确认打印</button>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <br>
+                <div class="alert alert-warning alert-dismissible" role="alert" th:if="${status==1}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span></button>
+                    <strong>警告：</strong>该考生不存在，请核实后再查询
+                </div>
+
+                <div class="alert alert-warning alert-dismissible" role="alert" th:if="${status==2}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span></button>
+                    <strong>警告：</strong>该考生还未毕业
+                </div>
+                <div class="alert alert-warning alert-dismissible" role="alert" th:if="${status==3}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span></button>
+                    <strong>警告：</strong>查询不能为空
+                </div>
+                <div class="alert alert-success alert-dismissible" role="alert" th:if="${status==4}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span></button>
+                    <strong>成功：</strong>查询成功！！！
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<!-- JavaScript部分 -->
+<script>
+    $(function(){
+        //清空form表单下的输入框
+        $('.ydr').on('click', function () {
+            $(':input','form')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+        });
+    })
+</script>
+</body>
+</html>

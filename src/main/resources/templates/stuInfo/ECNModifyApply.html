@@ -1,0 +1,90 @@
+<!-- 考生准考证修改申请 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>考生准考证修改申请</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2 style="text-align: center">考生准考证修改申请</h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <form class="form-inline" th:action="@{/stuInfo/ECNModifyApply}" th:if="${error!=1||error!=3}" method="post">
+                            <div class="alert alert-success"   role="alert">
+                                <span class="mylable_1">准考证号:</span>
+                                <span th:text="${account.getAccount()}"></span>
+                            </div>
+                            <textarea class="form-control" rows="10" cols="100" name="changeReason" style="margin: 0px; width: 750px; height: 196px;"></textarea>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-success submit">提交申请</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="alert alert-warning alert-dismissible" role="alert" th:if="${error==1}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span></button>
+                            <strong>提示：</strong>您还有申请未审核，请前往前台进行处理,再进行申请
+                        </div>
+                        <div class="alert alert-warning alert-dismissible" role="alert" th:if="${error==2}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span></button>
+                            <strong>提示：</strong>申请理由不能为空，请认真填写
+                        </div>
+                        <div class="alert alert-success alert-dismissible" role="alert"
+                             th:if="${error==3}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                    style="width: 10px;height: 10px;top: -10px;right: -5px;"><span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>成功：</strong>提交成功，请尽快前往前台办理审核！！
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="container">
+                            <ul class="time-vertical">
+                                <li><b></b><span>1</span><a href="javascript:void(0)">个人申请</a></li>
+                                <li><b></b><span>2</span><a href="javascript:void(0)">区县自考办审核</a></li>
+                                <li><b></b><span>3</span><a href="javascript:void(0)">市州自考办审核</a></li>
+                                <li><b></b><span>4</span><a href="javascript:void(0)">省自考办审核</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+</body>
+</html>

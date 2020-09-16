@@ -1,0 +1,268 @@
+<!-- 考籍转出手续申请-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>考籍转出手续申请</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>考籍转出手续申请</center></h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 66开  -->
+                <div class="row">
+
+                    <!-- 第一列输入框 -->
+                    <div class="col-md-5" style="position: relative;left: -100px;">
+                        <div class="container">
+                            <form class="form-horizontal"  method="post">
+
+                                <!-- 右边的修改输入框，记得改每个每个输入框的id -->
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">准考证号：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input" th:value="${infoOutApply.getExamCardNum()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">姓名：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input1" th:value="${infoOutApply.getName()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">英文名字：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input2" th:value="${infoOutApply.getEnglishName()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">性别代码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input3" th:value="${infoOutApply.getSex()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">户籍代码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input4" th:value="${infoOutApply.getCensusPlace()}" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">政治面貌代码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input5" th:value="${infoOutApply.getPolitical()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">民族代码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input6" th:value="${infoOutApply.getNation()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">学历代码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input7" th:value="${infoOutApply.getDegree()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">职业代码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input8" th:value="${infoOutApply.getJob()}">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+
+                        <!--第二列输入框-->
+                    <div class="col-md-4">
+                        <div class="container">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">专业名称：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input10" th:value="${infoOutApply.getMajorNum()}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">考生身份证类型代码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input14" th:value="${infoOutApply.getIdCardType()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">考生证件号：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input`" th:value="${infoOutApply.getIdCardNum()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">考生生日：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input=" th:value="${infoOutApply.getBirthday()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">考生电话：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input-" th:value="${infoOutApply.getPhoneNumber()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">考生邮编：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input0" th:value="${infoOutApply.getPostCode()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">考生地址：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input15" th:value="${infoOutApply.getAddress()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">考生电子邮件：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput" id="input16" th:value="${infoOutApply.getEmail()}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">考生照片信息：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly="readonly" class=" myinput"  th:value="${infoOutApply.getPhotoPath()}">
+                                    </div>
+                                </div>
+
+
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- 第三列输入框 -->
+                    <div class="col-md-4">
+                        <div class="container">
+                            <form class="form-horizontal">
+
+                                <!-- 右边的修改输入框，记得改每个输入框的id -->
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">转出编号：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class=" myinput" id="input18" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">转出省代码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class=" myinput" id="input19" th:value="${infoOutApply.getCityCode()}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">转出原因：</label>
+                                    <div class="col-sm-10">
+                                        <input type="textarea" class=" myinput" id="input20" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">转入省代码：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class=" myinput" id="input21" >
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">转入专业名称：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class=" myinput" id="input24" >
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">申请时间：</label>
+                                    <div class="col-sm-10">
+                                        <input type="date" class=" myinput" id="input28" >
+                                    </div>
+                                </div>
+
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+                <!-- 按钮层  -->
+                <div class="row" style="position:relative; top: 150px;">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-warning" >重置</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-success" onclick="sureApply()">确认提交</button>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    function sureApply(){
+        var Ecn = $("#input").val();
+        var applyCode = $("#input21").val();
+        var reason = $("#input20").val();
+        var rollOutTime = $("#input28").val();
+        $.ajax({
+            type: 'post',
+            url: '/stuInfoInOut/infoOutApply',
+            data:{Ecn:Ecn,applyCode:applyCode,reason:reason,rollOutTime:rollOutTime},
+            success: function (data) {
+                location.reload();
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!-- 毕业证打印页面  -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>毕业证打印</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>毕业证打印</center></h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <!-- 选择输入部分 -->
+                    <div class="col-md-4">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-10 myselect_1">
+                                <span>请选择查询类型：</span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <!-- 统计类型选择框 -->
+                                <select  id="types" class="form-control myselect_2" onchange="Change_second_selectwords_();">
+                                    <option value="">查询类型</option>
+                                    <option value="school" name="type">按学校查询</option>
+                                    <option value="major" name="type">按专业查询</option>
+                                </select>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                        <!-- 输入框  -->
+                        <div class="row">
+                            <form action="">
+                                <div class="col-md-10 myselect_1">
+                                    <span>请输入：</span>
+                                </div>
+                                <div class="col-md-6" id="newSelectContainer">
+                                    <select id="details" class="form-control myselect_2"></select>
+                                </div>
+                            </form>
+
+
+                        </div>
+
+                        <!-- 确认按钮  -->
+                        <div class="row">
+                            <br>
+                            <br>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-warning ydr" onclick="rebuild()">重置</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-success" onclick="queryCleck()">查询</button>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- 中间留一点空格  -->
+                    <div class="col-md-1">
+
+                    </div>
+                    <!-- 右边表格部分 -->
+                    <div class="col-md-7" id="newDataContainer">
+                        <div id="newData">
+                            <table class="table table-bordered  table table-hover" id="print-area">
+                                <caption  style="text-align:center">考生毕业证信息表</caption>
+                                <tbody>
+                                <tr>
+                                    <td>考籍号</td>
+                                    <td>姓名</td>
+                                    <td>毕业专业</td>
+                                    <td>毕业时间</td>
+                                    <td>毕业证编号</td>
+                                </tr>
+                                <tr th:each="graduater:${graduation}">
+                                    <td th:text="${graduater.getExamCardNum()}"></td>
+                                    <td th:text="${graduater.getName()}"></td>
+                                    <td th:text="${graduater.getMajorNum()}"></td>
+                                    <td th:text="${graduater.getGraduateDate()}"></td>
+                                    <td th:text="${graduater.getGraduateId()}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="myspan">
+                                    <span>当前第 1 页</span>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-warning" >上一页</button>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-success">下一页</button>
+                                </div>
+                            </div>
+
+                            <br>
+                            <br>
+
+
+                            <!-- 查询结果页面数 -->
+                            <div class="row">
+                                <br>
+                                <br>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-8 ">
+                                    共查询到符合条件的考生：<span th:text="${graCount}" style="color: red;font-size: 18px"></span> 位
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+
+                            </div>
+                            <!-- 确认打印-->
+                            <div class="row">
+                                <br>
+                                <br>
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-warning" onclick="rebuild()">重置</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <a th:href="@{/graduation/proManagement/graduationCertificatePrint/getWord}">
+                                        <button type="button" class="btn btn-success" onclick="print()">确认打印</button>
+                                    </a>
+
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<!-- JavaScript部分 -->
+<script>
+
+    function Change_second_selectwords_() {
+        var type = $("#types option:selected").val();
+        $.ajax({
+            type: 'post',
+            url: '/graduation/statistic/thisGraduationSearch',
+            data:{type:type},
+            success: function (data) {
+                var html = $(data).find("#details");
+                $("#newSelectContainer").html(html)
+
+            }
+        });
+    }
+
+    $(function(){
+        //清空form表单下的输入框
+        $('.ydr').on('click', function () {
+            $(':input','form')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+        });
+    })
+
+    function print(){
+        $("#print-area").print({
+            debug: true,      //如果是true则可以显示iframe查看效果（iframe默认高和宽都很小，可以再源码中调大），默认是false
+            importCSS: true,   //true表示引进原来的页面的css，默认是true。（如果是true，先会找$("link[media=print]")，若没有会去找$("link")中的css文件）
+            printContainer: true,  //表示如果原来选择的对象必须被纳入打印（注意：设置为false可能会打破你的CSS规则）。
+            operaSupport: false    //表示如果插件也必须支持歌opera浏览器，在这种情况下，它提供了建立一个临时的打印选项卡。默认是true
+        });
+    }
+
+    function queryCleck() {
+        var selects = $("select option:selected");
+        var type = "";
+        var code = "";
+        type = selects[0].value;
+        code = selects[1].value;
+        if (type!==""&& code!==""){
+            $.ajax({
+                type: 'post',
+                url: '/graduation/proManagement/graduationCertificatePrint',
+                data:{type:type,code:code},
+                success: function (data) {
+                    var html = $(data).find("#newData");
+                    $("#newDataContainer").html(html);
+                }
+            });
+        }
+
+    }
+    function rebuild() {
+        $("#types").val("");
+        $("#details").val("");
+    }
+</script>
+
+
+
+</body>
+</html>

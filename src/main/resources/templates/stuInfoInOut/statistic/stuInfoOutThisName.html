@@ -1,0 +1,166 @@
+<!-- 考籍转出-按本次名单统计页面 -->
+<!--本次办理期间办理的全部考籍转出作为统计条件-->
+<!--	统计本次办理开始时间到结束时间段内的全部考籍转出数据-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>考籍转出-按本次名单统计</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2><center>考籍转出-按本次名单统计</center></h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+
+                    <!-- 左边留一点空格  -->
+                    <div class="col-md-1">
+
+                    </div>
+                    <!-- 右边表格部分 -->
+                    <div class="col-md-10">
+                        <table class="table table-bordered  table table-hover">
+                            <caption  style="text-align:center">考籍转出统计表</caption>
+                            <tbody>
+                            <tr>
+                                <td>考籍号</td>
+                                <td>姓名</td>
+                                <td>转入地点</td>
+                                <td>办理时间</td>
+                            </tr>
+                            <tr th:each="stuInOut:${stuInOutList}">
+                                <td th:text="${stuInOut.getExamCardNum()}"></td>
+                                <td th:text="${stuInOut.getName()}"></td>
+                                <td th:text="${stuInOut.getRollInCity()}" class="cityAddr"></td>
+                                <td th:text="${stuInOut.getEndTime()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="myspan">
+                                <span>当前第 1 页</span>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-warning" >上一页</button>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-success">下一页</button>
+                            </div>
+                        </div>
+
+                        <br>
+                        <br>
+
+
+                        <!-- 查询结果页面数 -->
+                        <div class="row">
+                            <br>
+                            <br>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-8 ">
+                                共查询到符合条件的考生：<span th:text="${stuCount}" style="color: red;font-size: 18px"></span> 位
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- 右边留一点空格 -->
+                    <div class="col-md-4">
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    var first_keywords = {};
+    //定义每个字母对应的第二个下拉框
+    first_keywords['xian'] = ['长安区', '雁塔区', '高新区'];
+    first_keywords['xianyang'] = ['秦都区', '杨陵区', '西咸新区'];
+
+    function Change_second_selectwords_() {
+        //根据id找到两个下拉框对象
+        var target1 = document.getElementById("types");
+        //console.log(target1);
+        var target2 = document.getElementById("details");
+        //得到第一个下拉框的内容
+        var selected_types = target1.options[target1.selectedIndex].value;
+        //console.log(selected_types);
+        //清空第二个下拉框
+        while (target2.options.length) {
+            target2.remove(0);
+        }
+        //根据第一个下拉框的内容找到对应的列表
+        var types_list = first_keywords[selected_types];
+        if (types_list) {
+            for (var i = 0; i < types_list.length; i++) {
+                var item = new Option(types_list[i], i);
+                //将列表中的内容加入到第二个下拉框
+                //console.log(item);
+                target2.options.add(item);
+            }
+        }
+    }
+
+    var cityCode = {
+        11:"北京",
+        12:"天津",
+        13:"河北",
+        14:"山西",
+        15:"内蒙古",
+        65:"新疆",
+    };
+    window.onload = function () {
+       var cityArry =  $(".cityAddr");
+       for (var i=0;i<cityArry.length;i++){
+           var index = cityArry[i].innerText;
+           var city = cityCode[index];
+           cityArry[i].innerText = city;
+       }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!-- 考生关键信息修改申请 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>考生关键信息修改申请</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <!--    引入css文件-->
+    <div th:replace="fragments/header::css"></div>
+    <link rel="stylesheet" href="/css/timeliner.css">
+    <link rel="stylesheet" href="/css/web.css">
+    <link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+<!--引入侧边栏框架-->
+
+<div id="wrapper">
+    <div class="overlay"></div>
+    <div th:replace="fragments/home :: sidebar"></div>
+
+    <div class="">
+        <!--    内容框架-->
+
+        <!--  页面标题栏  -->
+        <div>
+            <h2 style="text-align: center">考生关键信息修改申请</h2>
+            <hr>
+        </div>
+
+        <div id="page-content-wrapper" th:fragment="pagecontent">
+            <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+            </button>
+            <!-- 主题内容部分 -->
+            <div class="container">
+                <!--  栅格 84开  -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4 style="text-align: center">考生关键信息</h4>
+                        <br>
+                        <!-- 基本信息显示及其修改栏 -->
+                        <form class="form-inline" th:action="@{/stuInfo/criticalInfoModifyApply}" method="post" th:if="${error!=1}">
+                            <!-- 姓名栏 -->
+                            <div class="form-group">
+                                <label for="exampleInputName1" class="mylable_1">&nbsp;姓名:&nbsp;</label>
+                                <input type="text" class="form-control" id="exampleInputName1"  th:placeholder="${KeyInfo.getName()}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName1" class="mylable_1">&nbsp;&nbsp;修改：</label>
+                                <input type="text" class="form-control" id="exampleInput1" name="name">
+                            </div>
+                            <br>
+                            <!-- 性别栏 -->
+                            <div class="form-group">
+                                <label for="exampleInputName2" class="mylable_1">性别:</label>
+                                <input type="text" class="form-control" id="exampleInputName2" th:placeholder="${KeyInfo.getSex()}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName2" class="mylable_1">&nbsp;&nbsp;修改：</label>
+                                <select class="form-control myselect" id="exampleInput2" name="sex">
+                                    <option></option>
+                                    <option>0</option>
+                                    <option>1</option>
+                                </select>
+                            </div>
+                            <br>
+                            <!-- 身份证号栏 -->
+                            <div class="form-group">
+                                <label for="exampleInputName3" class="mylable_1">身份证号:</label>
+                                <input type="text" class="form-control" id="exampleInputName3" th:placeholder="${KeyInfo.getIdCardNum()}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName3" class="mylable_1">&nbsp;&nbsp;修改：</label>
+                                <input type="text" class="form-control" id="exampleInput3" name="idCardNum">
+                            </div>
+                            <br>
+                            <!-- 民族栏 -->
+                            <div class="form-group">
+                                <label for="exampleInputName4" class="mylable_1">民族:</label>
+                                <input type="text" class="form-control" id="exampleInputName4" th:placeholder="${KeyInfo.getNation()}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName4" class="mylable_1">&nbsp;&nbsp;修改：</label>
+                                <select class="form-control myselect" id="exampleInput4" name="nation">
+                                    <option></option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                            <br>
+                            <!-- 拟报专业栏 -->
+                            <div class="form-group">
+                                <label for="exampleInputName5" class="mylable_1">拟报专业:</label>
+                                <input type="text" class="form-control" id="exampleInputName5" th:placeholder="${KeyInfo.getMajorNum()}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName5" class="mylable_1">&nbsp;&nbsp;修改：</label>
+                                    <select class="form-control myselect" id="exampleInput5" name="majorNum">
+                                        <option></option>
+                                        <option>001</option>
+                                        <option>002</option>
+                                        <option>003</option>
+                                        <option>004</option>
+                                        <option>005</option>
+                                    </select>
+                            </div>
+                            <br>
+                            <textarea class="form-control" rows="10" cols="100" name="changeReason"
+                                      style="margin: 0px; width: 750px; height: 196px;" placeholder="申请说明不得少于10字......."></textarea>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <button type="button" class="btn btn-warning ydr" >重置</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-success">提交申请</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="alert alert-warning alert-dismissible" role="alert" th:if="${error==1}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                    style="width: 10px;height: 10px;top: -10px;right: -5px;"><span
+                                    aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>提示：</strong>您还有申请未审核，请前往前台进行处理,再进行申请
+                        </div>
+                        <div class="alert alert-warning alert-dismissible" role="alert" th:if="${error==2}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                    style="width: 10px;height: 10px;top: -10px;right: -5px;"><span
+                                    aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>提示：</strong>数据不符合要求，请核对后在提交
+                        </div>
+                        <div class="alert alert-success alert-dismissible" role="alert" th:if="${error==3}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                    style="width: 10px;height: 10px;top: -10px;right: -5px;"><span
+                                    aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>提示：</strong>申请已提交，请尽快前往人工办进行业务办理
+                        </div>
+                        <div class="alert alert-warning alert-dismissible" role="alert" th:if="${error==0}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                    style="width: 10px;height: 10px;top: -10px;right: -5px;"><span
+                                    aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>提示：</strong>申请为空，请认真核实
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="container">
+                            <ul class="time-vertical">
+                                <li><b></b><span>1</span><a href="javascript:void(0)">个人申请</a></li>
+                                <li><b></b><span>2</span><a href="javascript:void(0)">区县自考办审核</a></li>
+                                <li><b></b><span>3</span><a href="javascript:void(0)">市州自考办审核</a></li>
+                                <li><b></b><span>4</span><a href="javascript:void(0)">省自考办审核</a></li>
+                                <li><b></b><span>5</span><a href="javascript:void(0)">入库</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入js文件-->
+<div th:replace="fragments/header::js"></div>
+
+<script>
+    $(function(){
+        //清空form表单下的输入框
+        $('.ydr').on('click', function () {
+            $(':input','form')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+        });
+    })
+</script>
+</body>
+
+</html>
